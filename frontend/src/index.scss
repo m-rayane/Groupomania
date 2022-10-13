@@ -1,0 +1,16 @@
+body {
+  background-color: rgb(145, 145, 145);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  width: 100%;
+}
+

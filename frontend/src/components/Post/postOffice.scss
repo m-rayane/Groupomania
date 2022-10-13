@@ -1,0 +1,83 @@
+.postForm {
+    display: flex;
+    flex-direction: column;
+    background-color: green;
+    &__field {
+        display: flex;
+        flex-direction: column;
+        color: rgb(207, 207, 207);
+        textarea {
+            width: 300px;
+            height: 200px;
+            word-wrap: break-word;
+
+            
+            
+        }
+    }
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.postCard {
+    font-family: 'Dancing Script', cursive;
+    background-image: url('../../../public/images/old-postcard-600x400.jpg');
+    margin: 50px auto;
+    width: 600px;
+    height: 400px;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.2);
+    & li {
+        list-style: none;
+    }
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 140px;
+        &__postImage {
+            width: 33%;
+            padding: 7px 7px;
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        &__logo {
+            width: 33%;
+        }
+        &__user {
+            display: flex;
+            width: 34%;
+            border: 1px solid blue;
+            &__name {
+                width: 50%;
+            }
+            &__picture {
+                border: 1px solid green;
+                width: 50%;
+                height: 110px;
+                & img {
+                    // border: 1px solid rgb(94, 40, 49);
+                    width: 70px;
+                    height: 85px;
+                    object-fit: cover;
+                    padding: 4px 0px 0px 15px;
+                    rotate: 2deg;
+                }
+            }
+        }
+    }
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        &__message {
+            padding: 30px 20px;
+            width: 60%;
+            height: 200px;           
+        }
+    }
+}
+
