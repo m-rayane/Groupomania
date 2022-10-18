@@ -7,11 +7,11 @@ export const FormField = ({className, name, value, onChange, type, children}) =>
     )
 }
 
-export const TextField = ({className, name, rows, cols, wrap, maxLength, children}) => {
+export const TextField = ({className, name, rows, cols, wrap, placeHolder, defaultValue, children}) => {
   return (
       <div className={className}>
         <label htmlFor={name}>{children}</label>
-        <textarea id={name} name={name} rows={rows} cols={cols} wrap={wrap} maxLength={maxLength} required ></textarea>
+        <textarea id={name} name={name} rows={rows} cols={cols} wrap={wrap} placeholder={placeHolder} defaultValue={defaultValue} required ></textarea>
       </div>
   )
 }

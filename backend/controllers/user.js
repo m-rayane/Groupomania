@@ -47,4 +47,49 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+exports.getAllUsers = async (req, res, next) => {
+    const users = await User.find().select('-password')
+    res.status(200).json(users)
+  }
+  
+  exports.getUserData = async (req, res, next) => {
+    const user = await User.findOne({ _id: req.params.id }).select('-password')
+    res.status(200).json(user)
+  }
+  
+  exports.logout = (req, res, next) => {
+    console.log('You are deconnected')
+  }
+  
+  exports.updateUser = (req, res, next) => {
+    const userObject = req.file
+      ? {
+          profilePicture: `${req.protocol}://${req.get('host')}/images/${
+            req.file.filename
+          }`,
+        }
+      : { ...req.body }
+    User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
+      .then(() => res.status(200).json({ message: 'User updated' }))
+      .catch((error) => res.status(400).json({ error }))
+  }
+  
+  exports.deleteUser = (req, res, next) => {
+    User.findOne({ _id: req.params.id }).then((user) => {
+      const filename = user.profilePicture.split('/images')[1]
+      fs.unlink(`images/${filename}`, () => {
+        User.deleteOne({ _id: req.params.id })
+          .then(() => {
+            res
+              .status(200)
+              .json({ message: "User and user's data has been delete" })
+          })
+          .catch((error) => res.status(400).json({ error }))
+      })
+      // }
+      if (!user) {
+        res.status(404).json({ message: 'No user to delete' })
+      }
+    })
+  }
   

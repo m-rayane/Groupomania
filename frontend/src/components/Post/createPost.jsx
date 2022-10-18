@@ -11,13 +11,11 @@ import { PostContext } from "../../utils/contexts/postContext";
 
 
 export default function CreatePost() {
-    const { userIdData, tokenLS} = useContext(PostContext);
+    const { userIdData, tokenLS, getPosts} = useContext(PostContext);
     const postServices = new PostServices();
     const navigate = useNavigate();
     const [postImage, setPostImage] = useState(null);
 
-    console.log(tokenLS);
-    console.log(userIdData);
     useEffect(() => {
         if (!tokenLS) {
             navigate('/auth', { replace: true });
@@ -31,14 +29,15 @@ export default function CreatePost() {
         formData.append('posterId', userIdData._id)
         formData.append('message', e.target['postMessage'].value);
         formData.append('image', postImage);
-        // console.log(...formData);
-        // console.log(e.target['postMessage'].value);
+        console.log(...formData);
+        console.log(e.target['postMessage'].value);
 
 
         try {
             await postServices.postPost(formData);
-            // e.target['message'].value = '';
-            // setFile(null);
+            e.target['postMessage'].value = '';
+            setPostImage(null);
+            getPosts()
         } catch (error) {
             console.log(error)
         }
@@ -51,13 +50,28 @@ export default function CreatePost() {
 
       return (
         <div>
-            <form className="postForm" onSubmit={HandleSubmit}>
-                {/* <div className="postUsername">{setUsername(username)}</div> */}
-                <TextField className="postForm__field" name="postMessage" maxLength="500" wrap="hard" >Content</TextField>
-                <FormField className="postForm__image" type ="file" name="postImage" onChange={handleImage}></FormField>
-                
-                <div>
-                    <button className="signupForm__btn">Envoyer</button>
+            <form className="postForm__front" onSubmit={HandleSubmit}>
+                <div className="postForm__front__header">
+                    <div className="postForm__front__header__postImage">
+                            <FormField className="postForm__image" type ="file" name="postImage" onChange={handleImage}></FormField>
+                    </div>
+                    <div className="postForm__front__header__user">
+                        <div className="postForm__front__header__user__name">
+                            {/* Send by {poster.firstName} {poster.lastName} */}
+                        </div>
+                        <div className="postForm__front__header__user__picture">
+                            {/* <img src={poster.profilePicture} alt="" /> */}
+                        </div>
+                    </div>
+                </div>
+                <div className="postForm__front__content">
+                    <TextField className="postForm__front__content__message" name="postMessage" wrap="hard" placeHolder="Tale us your Story..."></TextField>
+                </div>
+                <div className="postForm__front__footer">
+                    <div>
+                        <button className="postForm__front__footer__btn">Cancel</button>
+                        <button className="postForm__front__footer__btn">Post</button>
+                    </div>
                 </div>
             </form>
             

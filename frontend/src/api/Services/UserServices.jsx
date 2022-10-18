@@ -34,5 +34,13 @@ export default class UserService {
     return await postRequest('/login', data)
   }
 
+  // put request
+  async editUser(id, data) {
+    return await putRequest('/users/' + id, data)
+  }
 
+  // delete request
+  async deleteUser(id) {
+    return await deleteRequest('/users/' + id)
+  }
 }

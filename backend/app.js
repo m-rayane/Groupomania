@@ -6,7 +6,7 @@ const cors = require('cors');
 const corsOptions = {
   origin: 'http://localhost:3000',
   credentials: true,
-  allowedHeaders: ['sessionId', 'Content-Type'],
+  allowedHeaders: ['sessionId', 'Content-Type', 'Authorization'],
   exposedHeaders: ['sessionId'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
@@ -27,14 +27,14 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false, // allow img in cors for http
-    crossOriginEmbedderPolicy: false, // allow img in cors for https
-  })
-)
+// app.use(
+//   helmet({
+//     crossOriginResourcePolicy: false, // allow img in cors for http
+//     crossOriginEmbedderPolicy: false, // allow img in cors for https
+//   })
+// )
 
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 // mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.apwibmo.mongodb.net/?retryWrites=true&w=majority
 

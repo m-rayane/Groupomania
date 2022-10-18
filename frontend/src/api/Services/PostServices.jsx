@@ -30,3 +30,26 @@ async putPost(id, data) {
 async deletePost(id) {
   return await deleteRequest('/posts/' + id)
 }
+
+// ********** Comment request **********
+
+// post request
+async postComment(id, data) {
+  return await postRequest('/posts/' + id + '/comment', data)
+}
+async deleteComment(id, data) {
+  return await postRequest('/posts/' + id + '/comment/delete', data)
+}
+
+// put request
+async putComment(id, data) {
+  return await putRequest('/posts/' + id + '/comment', data)
+}
+
+// ********** Like request **********
+
+// post request
+async postLike(id, data) {
+  return await postRequest('/posts/' + id + '/like', data)
+}
+}

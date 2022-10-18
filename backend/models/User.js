@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, trim: true, lowercase: true, required: true, unique: true },
   password: { type: String, required: true },
-  profilePicture: { type: String, default: "http://localhost:4200/images/default-avatar.png" },
+  profilePicture: { type: String, default: "http://localhost:4200/images/default/default-avatar.png" },
   isAdmin: { type: Number, default: 0 },
   likes: { type: [String] },
   posts: { type: [String] },

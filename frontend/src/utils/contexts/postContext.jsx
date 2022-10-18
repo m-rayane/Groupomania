@@ -16,6 +16,7 @@ export const PostProvider = ({ children }) => {
 
   // const isModerator = localStorage.getItem('moderator')
 
+  console.log(userId)
 
   useEffect(() => {
     const getUserId = async () => {
@@ -47,7 +48,7 @@ export const PostProvider = ({ children }) => {
     // function for dispatching DOM rendering on every new api call
     const getPosts = async () => {
       const dispatch = async () => {
-        const reqRes = await postServices.getArticle()
+        const reqRes = await postServices.getPost()
         setPostsData(reqRes.reverse())
       }
       dispatch()

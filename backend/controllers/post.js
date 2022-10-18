@@ -36,8 +36,6 @@ exports.getOnePost = (req, res, next) => {
 
 exports.createPost = (req, res) => {
     const postObject = req.body;
-    console.log(req.body.image);
-    console.log(req.body.message);
     if (req.body.image === 'null') {
       const post = new Post({
         ...postObject,
@@ -59,23 +57,25 @@ exports.createPost = (req, res) => {
     }
   }
 
-
-
- //to modify a post
+//  to modify a post
 exports.modifyPost = (req, res, next) => {
+  console.log(req.body)
     const postObject = req.file ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        ...req.body,
+        image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
-    delete postObject._userId;
+    console.log(postObject)
     Post.findOne({_id: req.params.id})
         .then((post) => {
-            if (post.userId != req.auth.userId) {
+            if (post.posterId != req.auth.userId) {
                 res.status(401).json({ message : 'Not authorized'});
             } else {
+                const filename = post.image.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {
                 Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
                 .then(() => res.status(200).json({message : 'Article is modified'}))
                 .catch(error => res.status(401).json({ error }));
+                })
             }
         })
         .catch((error) => {
@@ -87,14 +87,15 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id})
       .then(post => {
-          if (post.userId != req.auth.userId) {
-              res.status(401).json({message: 'Not authorized'});
+        console.log(post)
+          if (post.posterId != req.auth.userId) {
+              res.status(401).json({message: 'Not authorized !'});
           } else {
-              const filename = post.imageUrl.split('/images/')[1];
+              const filename = post.image.split('/images/')[1];
               fs.unlink(`images/${filename}`, () => {
                   Post.deleteOne({_id: req.params.id})
                       .then(() => { res.status(200).json({message: 'Article is deleted !'})})
-                      .catch(error => res.status(401).json({ error }));
+                      .catch(error => res.status(401).json({ message: 'Article is NOT deleted !' }));
               });
           }
       })
@@ -102,9 +103,6 @@ exports.deletePost = (req, res, next) => {
           res.status(500).json({ error });
       });
 };
-
-
-
 
 
 

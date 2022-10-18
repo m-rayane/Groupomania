@@ -19,9 +19,7 @@ export default function Header() {
           <StyledLink to="/createPost">
             Create a post
           </StyledLink>
-          <div className="logoutTest">
-            <button className="modal-toggle">Logout</button>
-          </div>
+          
       </HeaderCol>
   )
 }
