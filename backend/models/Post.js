@@ -8,8 +8,17 @@ const postSchema = new mongoose.Schema(
       message: { type: String, trim: true },
       image: { type: String },
       likes: { type: Number, default: 0 },  
-      userLiked: { type: Array({ userLikedId: String }), require: true },  
-     
+      usersLiked: { type: [String]},  
+      comments: {
+        type: Array({
+          commenterId: String,
+          commenterFirstName: String,
+          commenterLastName: String,
+          commenterProfilePicture: String,
+          text: String,
+        }),
+        require: true,
+      },
     },
     {
       timestamps: true

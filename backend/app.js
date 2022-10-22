@@ -12,7 +12,6 @@ const corsOptions = {
   preflightContinue: false,
 }
 
-const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
 const multer = require('multer');
 const upload = multer();
@@ -53,11 +52,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(
-  mongoSanitize({
-    remplaceWith: '_',
-  })
-)
 
 
 app.use(cors(corsOptions))

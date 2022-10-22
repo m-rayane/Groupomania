@@ -5,7 +5,7 @@ export default class Post {
       this._message = data.message
       this._image = data.image
       this._likes = data.likes
-      this._usersliked = data.userLiked
+      this._usersLiked = data.usersLiked
       this._comments = data.comments
       this._createdAt = data.createdAt
       this._updatedAt = data.updatedAt
@@ -27,7 +27,7 @@ export default class Post {
       return this._likes
     }
     get usersliked() {
-      return this._usersliked
+      return this._usersLiked
     }
     get comments() {
       return this._comments

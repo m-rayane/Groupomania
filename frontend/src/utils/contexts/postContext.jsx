@@ -14,15 +14,12 @@ export const PostProvider = ({ children }) => {
   const tokenLS = localStorage.getItem("token");
   const userId = localStorage.getItem("id");
 
-  // const isModerator = localStorage.getItem('moderator')
-
-  console.log(userId)
+  // console.log(userId)
 
   useEffect(() => {
     const getUserId = async () => {
       const res = await userServices.getUserId(userId);
       setUserIdData(res);
-      console.log(res);
     }
     userId ? getUserId() : console.log("User not connected");
   }, [userId])
@@ -31,44 +28,42 @@ export const PostProvider = ({ children }) => {
     const getUsers = async () => {
       const res = await userServices.getUser()
       setUsersData(res)
-      console.log(res)
     }
     getUsers()
   }, [])
 
   useEffect(() => {
-    const getAllPosts = async () => {
+    const getPosts = async () => {
       const res = await postServices.getPost()
       setPostsData(res.reverse())
-      console.log(res.reverse())
     }
-    getAllPosts()
+    getPosts()
   }, [])
 
-    // function for dispatching DOM rendering on every new api call
+    // function for re-rendering on every new api call
     const getPosts = async () => {
-      const dispatch = async () => {
+      const reRender = async () => {
         const reqRes = await postServices.getPost()
         setPostsData(reqRes.reverse())
       }
-      dispatch()
+      reRender()
     }
   
     // function for dispatching DOM rendering on users api call
     const getUserId = async () => {
-      const dispatch = async () => {
+      const reRender = async () => {
         const reqRes = await userServices.getUserId()
         setUserIdData(reqRes)
       }
-      dispatch()
+      reRender()
     }
     // function for dispatching DOM rendering on user api call
     const getUsers = async () => {
-      const dispatch = async () => {
+      const reRender = async () => {
         const reqRes = await userServices.getUser()
         setUsersData(reqRes)
       }
-      dispatch()
+      reRender()
     }
 
   return (

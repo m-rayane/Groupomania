@@ -45,13 +45,25 @@ export default function CreatePost() {
 
       const handleImage = (e) => {
         setPostImage(e.target.files[0]);
+        
+      }
 
+      const imagePreview = () => {
+        const [file] = imagePreview.files
+        if(file) {
+            const preview = document.getElementById('preview')
+            preview.src = URL.createObjectURL(file)
+            console.log(preview.src)
+        }
       }
 
       return (
         <div>
             <form className="postForm__front" onSubmit={HandleSubmit}>
                 <div className="postForm__front__header">
+                    <div className="postForm__front__header__postImage">
+                        <img id="preview" src="" alt="" />
+                    </div>
                     <div className="postForm__front__header__postImage">
                             <FormField className="postForm__image" type ="file" name="postImage" onChange={handleImage}></FormField>
                     </div>
