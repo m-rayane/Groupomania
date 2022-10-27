@@ -12,9 +12,6 @@ const postSchema = new mongoose.Schema(
       comments: {
         type: Array({
           commenterId: String,
-          commenterFirstName: String,
-          commenterLastName: String,
-          commenterProfilePicture: String,
           text: String,
         }),
         require: true,

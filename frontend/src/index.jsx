@@ -5,16 +5,14 @@ import ReactDOM from 'react-dom/client';
 
 import './index.scss';
 
-import Home from './pages/Home/home';
 import Header from './components/Header/header';
-import AuthModals from './pages/Auth/authModals';
+import Login from './components/Auth/login';
 import CreatePost from './components/Post/createPost';
 import Logout from './components/Auth/logout';
-import PostOffice from './components/Post/postOffice';
+import PostOffice from './pages/postOffice';
+import PageNotFound from './pages/pageNotFound';
 // import Auth from './utils/contexts/Auth';
-import { AuthProvider } from './utils/contexts/formContext';
 import { PostProvider } from './utils/contexts/postContext';
-// import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -32,15 +30,13 @@ function App() {
                           <Header />
                         </div>
                         <div className="main">
-                        <AuthProvider>
                           <Routes>
-                              <Route exact path="/" element={<Home />} />
-                              <Route path="/postOffice" element={<PostOffice />} />
-                              <Route path="/auth" element={<AuthModals />} />
+                              <Route exact path="/" element={<PostOffice />} />
+                              <Route path="/login" element={<Login />} />
                               <Route path="/createPost" element={<CreatePost />} />
                               <Route path="/logOut" element={<Logout />} />
+                              <Route path="*" element={<PageNotFound />}></Route>
                           </Routes>
-                          </AuthProvider>
                         </div>
                       </Router>
                     </PostProvider>

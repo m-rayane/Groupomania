@@ -1,18 +1,17 @@
 import { FormField } from "../Atoms/Form/formField";
 
-export const SignInForm = ({ className }) => {
+export const SignInForm = ({ className, handleSubmit, handleChange }) => {
     return (
-        <>
-            <div className={ className }>
-                <FormField name="email" className="signupForm__field" type ="email">
-                    Enter your email address !
-                </FormField>
-            </div>
-            <div className={ className }>
-                <FormField name="password" className="signupForm__field" type ="password">
-                    Enter your password !
-                </FormField>
-            </div>
-        </>
+            <form onSubmit={handleSubmit} className={ className}>
+                <div className={ className + "__fields" }>
+                    <FormField name="signInEmail" className={ className + "__fields__field"} type ="email" onChange={handleChange}>
+                        Email
+                    </FormField>            
+                    <FormField name="signInPassword" className={ className + "__fields__field"} type ="password" onChange={handleChange}>
+                        Password
+                    </FormField> 
+                </div>
+                <button className={ className + "__btn" }>Connect</button>
+          </form>         
     )
 }

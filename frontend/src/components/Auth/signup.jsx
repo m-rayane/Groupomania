@@ -1,17 +1,14 @@
-// atoms
+
 import { SignUpForm } from '../Molecules/signUpForm'
 
-// libraries
+
 import { useContext, useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+
 import { FormContext } from '../../utils/contexts/formContext'
-// css
+
 import './auth.scss'
 
-// regex
-// import { regexName, regexEmail, regexPassword } from '../../utils/regex/regex'
 
-// api
 import UserService from '../../api/Services/UserServices'
 const userServices = new UserService()
 
@@ -28,14 +25,7 @@ export default function SignUp() {
   const [error, setError] = useState('')
   const [validation, setValidation] = useState('')
 
-  // push all inputs from form into inputs variable
-
-  // init hooks
-  // const formRef = useRef()
-  // const redirect = useNavigate()
-
-  //sign up form submit
-  const handleFormSubmit = async (e) => {
+   const handleSignupSubmit = async (e) => {
     e.preventDefault()
     setError('')
     const firstNameValue = e.target['firstName'].value;
@@ -83,7 +73,6 @@ export default function SignUp() {
 
     return (
       <>
-        {authModal.signUpModal && (
           <section className="auth">
 
             <div className="auth__modal">
@@ -96,7 +85,7 @@ export default function SignUp() {
 
             <div className="auth__box">
                 <h2 className="auth__box__title">Create your account !</h2>
-                <form onSubmit={handleFormSubmit} className="auth__box__form">
+                <form onSubmit={handleSignupSubmit} className="auth__box__form">
                     <div>
                         <SignUpForm className="auth__box__form__signup"></SignUpForm>
                     </div>
@@ -106,7 +95,6 @@ export default function SignUp() {
                 </form>
             </div>
           </section>
-        )}
       </>
     )
 }

@@ -1,34 +1,27 @@
 import { FormField } from "../Atoms/Form/formField";
 
-export const SignUpForm = ({ className }) => {
+export const SignUpForm = ({ className, handleSubmit, handleChange }) => {
     return (
-        <>
-            <div className={ className }>
-                <FormField name="firstName" className="signupForm__field" type ="text">
-                    Enter your firstname
+         <form onSubmit={handleSubmit} className={ className}>
+            <div className={ className + "__fields"}>
+                <FormField name="firstName" className={ className + "__fields__field"} type ="text" onChange={handleChange}>
+                    Enter your firstname.
+                </FormField>              
+                <FormField name="lastName" className={ className + "__fields__field"} type ="text" onChange={handleChange}>
+                    Enter your lastname.
+                </FormField>            
+                <FormField name="signUpEmail" className={ className + "__fields__field"} type ="email" onChange={handleChange}>
+                    Enter an email address.
                 </FormField>
+                <FormField name="signUpPassword" className={ className + "__fields__field"} type ="password" onChange={handleChange}>
+                    Choose a password.
+                </FormField>                        
+                <FormField name="confirmPassword" className={ className + "__fields__field"} type ="password" onChange={handleChange}>
+                    Confirm your password.
+                </FormField>  
             </div>
-            <div className={ className }>  
-                <FormField name="lastName" className="signupForm__field" type ="text">
-                    Enter your lastname
-                </FormField>
-            </div>
-            <div className={ className }>
-                <FormField name="email" className="signupForm__field" type ="email">
-                    Enter an email adress
-                </FormField>
-            </div>
-            <div className={ className }>
-                <FormField name="password" className="signupForm__field" type ="password">
-                    Choose a password
-                </FormField>
-            </div>
-            <div className={ className }>            
-                <FormField name="confirmPassword" className="signupForm__field" type ="password">
-                    Confirm your password
-                </FormField>
-            </div>
-        </>
+            <button className={ className + "__btn" }>Create</button>
+          </form>         
     )
 }
 

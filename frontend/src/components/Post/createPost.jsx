@@ -1,4 +1,4 @@
-import './postOffice.scss';
+import '../../utils/style/postOffice.scss';
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import {FormField, TextField} from  "../Atoms/Form/formField";

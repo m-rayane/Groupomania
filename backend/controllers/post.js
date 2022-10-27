@@ -111,11 +111,7 @@ exports.createComment = async (req, res) => {
       .then((post) => {
         Post.updateOne(
           { _id: req.params.id },
-          {
-            $push: {
-              comments: req.body,
-            },
-          }
+          { $push: { comments: req.body} }
         )
           .then(() => res.status(201).json({ message: 'Comment sent !' }))
           .catch((error) => res.status(404).json({ error }))
@@ -124,15 +120,13 @@ exports.createComment = async (req, res) => {
   }
   
   exports.editComment = async (req, res) => {
-    Post.findOne({
-      _id: req.params.id,
-    })
+    Post.findOne({ _id: req.params.id })
       .then((post) => {
+        console.log(req.body)
+        console.log(req.params.id)
         Post.updateOne(
           { _id: req.params.id, 'comments._id': req.body.commentId },
-          {
-            $set: { 'comments.$.text': req.body.text },
-          }
+          { $set: { 'comments.$.text': req.body.text }}
         )
           .then(() => res.status(200).json({ message: 'Comment updated !' }))
           .catch((error) => res.status(404).json({ error }))

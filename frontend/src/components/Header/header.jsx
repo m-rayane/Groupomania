@@ -1,25 +1,22 @@
 import './header.scss';
-import { StyledLink, HeaderCol   } from "../../utils/style/header";
+import { Link } from 'react-router-dom'
+
 
 export default function Header() {
   return (
-      <HeaderCol>
-          <StyledLink to="/">
-            Home
-          </StyledLink>
-          <StyledLink to="/postOffice">
-            Post Office
-          </StyledLink>
-          <StyledLink to="/auth">
-            Login
-          </StyledLink>
-          <StyledLink to="/logout">
-            Logout
-          </StyledLink>
-          <StyledLink to="/createPost">
-            Create a post
-          </StyledLink>
-          
-      </HeaderCol>
+    <>
+      <Link to="/">
+        Home
+      </Link>
+      <Link to="/login">
+        Login
+      </Link>
+      <Link to="/logout">
+        Logout
+      </Link>
+      <Link to="/createPost">
+        Create a post
+      </Link>
+    </>
   )
 }
