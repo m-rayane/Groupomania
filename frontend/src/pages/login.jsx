@@ -1,15 +1,15 @@
 // atoms
-import { SignInForm } from '../Molecules/signInForm';
-import { SignUpForm } from '../Molecules/signUpForm';
+import { SignInForm } from '../components/Molecules/signInForm';
+import { SignUpForm } from '../components/Molecules/signUpForm';
 
-import './auth.scss';
+import '../utils/style/auth.scss';
 
 import {useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { PostContext } from "../../utils/contexts/postContext";
+import { PostContext } from "../utils/contexts/postContext";
 
-import UserService from '../../api/Services/UserServices';
+import UserService from '../api/Services/UserServices';
 const userServices = new UserService();
 
 const regexName = /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]*$/i;
@@ -28,6 +28,8 @@ export default function Login() {
   const [validation, setValidation] = useState('')
   const [error, setError] = useState('');
   const [isSignIn, setIsSignIn] = useState(true);
+  const [activeSignInBtn, setActiveSignInBtn] = useState('activeBtn')
+  const [activeSignUpBtn, setActiveSignUpBtn] = useState('')
 
 
 
@@ -69,8 +71,8 @@ export default function Login() {
             e.target['firstName'].value = ''
             e.target['lastName'].value = ''
             e.target['signUpEmail'].value = ''
-            e.target['password'].value = ''
             e.target['signUpPassword'].value = ''
+            e.target['confirmPassword'].value = ''
             setValidation('Account successfully created')
           } catch (err) {
             setError('An error occurs. Try again later')
@@ -106,28 +108,43 @@ export default function Login() {
         }
     }
 
+    // const activeBtn = (elementId) => {
+    //   if (document.querySelector('.activeBtn')) {
+    //     document.querySelector('.activeBtn').classList.remove('activeBtn')
+    //   };
+    //   document.getElementById(elementId).classList.add('activeBtn');      
+    // }
+
     const handleSignInModal = async () => {
-        setIsSignIn(true);
-        setError('');
+      setActiveSignInBtn('activeBtn');
+      setActiveSignUpBtn('');
+      setIsSignIn(true);
+      setError('');
+      setValidation('');
+
     };
 
     const handleSignUpModal = async () => {
-        setIsSignIn(false);
-        setError('');
+      setActiveSignInBtn('');
+      setActiveSignUpBtn('activeBtn');
+      setIsSignIn(false);
+      setError('');
+      setValidation('');
     };
 
     const handleChange = async () => {
         setError('');
+        setValidation('');
     }
   return ( 
     <div className="auth">
 
       <div className="auth__header">
-        <button className="auth__header__btn" id="signInBtn" onClick={handleSignInModal}>
-          Sign In
+        <button className={"auth__header__btn " + activeSignInBtn} id="signInBtn" onClick={handleSignInModal}>
+          SIGN-IN
         </button>
-        <button className="auth__header__btn" id="signUpBtn" onClick={handleSignUpModal}>
-          Create an Account
+        <button className={"auth__header__btn " + activeSignUpBtn} id="signUpBtn" onClick={handleSignUpModal}>
+          CREATE YOUR ACCOUNT
         </button>
       </div>
 
@@ -135,21 +152,26 @@ export default function Login() {
 
         {isSignIn && (
           <div className="auth__content__login">
-            <h2 className="auth__content__login__title">Connect yourself !</h2>
             <SignInForm className="auth__content__login__form" handleSubmit={handleLoginSubmit} handleChange={handleChange}/>
           </div>
         )}
         
         {!isSignIn && (
           <div className="auth__content__signUp">
-            <h2 className="auth__content__signUp__title">Create your account !</h2>
             <SignUpForm className="auth__content__signUp__form" handleSubmit={handleSignUpSubmit} handleChange={handleChange}/>
           </div>
         )}
 
+        <div className="auth__content__message">
+          {{error} && (
+            <div className="auth__content__message__error">{error}</div>
+          )}
+          {{validation} && (
+            <div className="auth__content__message__validation">{validation}</div>
+          )}
+        </div>
 
-
-        <div className="auth__content__errorMsg">{error}</div>
+        
 
       </div>            
     </div>

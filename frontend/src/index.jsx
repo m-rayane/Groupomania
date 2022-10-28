@@ -6,10 +6,10 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 
 import Header from './components/Header/header';
-import Login from './components/Auth/login';
+import Login from './pages/login';
 import CreatePost from './components/Post/createPost';
-import Logout from './components/Auth/logout';
 import PostOffice from './pages/postOffice';
+import Profil from './pages/profil';
 import PageNotFound from './pages/pageNotFound';
 // import Auth from './utils/contexts/Auth';
 import { PostProvider } from './utils/contexts/postContext';
@@ -34,7 +34,7 @@ function App() {
                               <Route exact path="/" element={<PostOffice />} />
                               <Route path="/login" element={<Login />} />
                               <Route path="/createPost" element={<CreatePost />} />
-                              <Route path="/logOut" element={<Logout />} />
+                              <Route path="/profil" element={<Profil />} />
                               <Route path="*" element={<PageNotFound />}></Route>
                           </Routes>
                         </div>

@@ -13,32 +13,39 @@ export const PostProvider = ({ children }) => {
   const [postsData, setPostsData] = useState([]);
   const tokenLS = localStorage.getItem("token");
   const userId = localStorage.getItem("id");
+  const [isLoading, setIsLoading] = useState(true)
 
   // console.log(userId)
 
   useEffect(() => {
     const getUserId = async () => {
       const res = await userServices.getUserId(userId);
+      setIsLoading(true);
       setUserIdData(res);
+      setIsLoading(false);
     }
     userId ? getUserId() : console.log("User not connected");
-  }, [userId])
+  }, [userId]);
 
   useEffect(() => {
     const getUsers = async () => {
-      const res = await userServices.getUser()
-      setUsersData(res)
+      const res = await userServices.getUser();
+      setIsLoading(true);
+      setUsersData(res);
+      setIsLoading(false);
     }
-    getUsers()
-  }, [])
+    userId ? getUsers() : console.log("User not connected");
+  }, [userId]);
 
   useEffect(() => {
     const getPosts = async () => {
-      const res = await postServices.getPost()
-      setPostsData(res.reverse())
+      const res = await postServices.getPost();
+      setIsLoading(true);
+      setPostsData(res.reverse());
+      setIsLoading(false);
     }
-    getPosts()
-  }, [])
+    userId ? getPosts() : console.log("User not connected");
+  }, [userId])
 
     // function for re-rendering on every new api call
     const getPosts = async () => {
@@ -73,6 +80,7 @@ export const PostProvider = ({ children }) => {
       userIdData,
       postsData,
       tokenLS,
+      isLoading,
       getPosts,
       getUserId,
       getUsers

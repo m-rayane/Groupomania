@@ -1,4 +1,4 @@
-import { HeartSvg, EditSvg, DeleteSvg, CommentSvg, CancelSvg, SendSvg, TurnSvg } from './svg/svg';
+import { HeartSvg, EditSvg, DeleteSvg, CommentSvg, CancelSvg, ConfirmSvg, SendSvg, TurnSvg } from './svg/svg';
 
 export const LikeButton = ({ className, onClick, value }) => {
     return (
@@ -36,6 +36,14 @@ export const CancelButton = ({ className, onClick, value }) => {
     return (
         <button className={className} onClick={onClick} value={value} >
             <CancelSvg />
+        </button>
+    )
+}
+
+export const ConfirmButton = ({ className, onClick, value }) => {
+    return (
+        <button className={className} onClick={onClick} value={value} >
+            <ConfirmSvg />
         </button>
     )
 }

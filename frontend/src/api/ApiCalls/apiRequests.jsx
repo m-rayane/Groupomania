@@ -7,23 +7,12 @@ const tokenLS = localStorage.getItem("token");
 axios.defaults.baseURL = 'http://localhost:4200/api'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Authorization'] = tokenLS
-// axios.defaults.timeout = 6000
-// axios.defaults.withCredentials = true
-
-const setRequest = (val) => {
-    const config = {
-      params: {},
-    }
-    if (val) {
-      config.params = val
-    }
-    return config
-  }
-  
+axios.defaults.timeout = 6000
+axios.defaults.withCredentials = true
 
 // axios request
-export const getRequest = async (url, val = null) => {
-  const result = await axios.get(url, { ...setRequest(val) })
+export const getRequest = async (url) => {
+  const result = await axios.get(url)
   if (result.status === 200) {
     return result
   } else {
@@ -31,8 +20,8 @@ export const getRequest = async (url, val = null) => {
   }
 }
 
-export const postRequest = async (url, data = null, val = null) => {
-  const result = await axios.post(url, data, { ...setRequest(val) })
+export const postRequest = async (url, data = null) => {
+  const result = await axios.post(url, data)
   if (result.status === 201 || result.status === 200) {
     return result;
   } else {
@@ -40,8 +29,8 @@ export const postRequest = async (url, data = null, val = null) => {
   }
 }
 
-export const deleteRequest = async (url, val = null) => {
-  const result = await axios.delete(url, { ...setRequest(val) })
+export const deleteRequest = async (url) => {
+  const result = await axios.delete(url)
   if (result.status === 200) {
     return result
   } else {
@@ -49,11 +38,12 @@ export const deleteRequest = async (url, val = null) => {
   }
 }
 
-export const putRequest = async (url, data = null, val = null) => {
-  const result = await axios.put(url, data, { ...setRequest(val) })
+export const putRequest = async (url, data = null) => {
+  const result = await axios.put(url, data)
   if (result.status === 200) {
     return result
   } else {
     throw result.status
   }
 }
+

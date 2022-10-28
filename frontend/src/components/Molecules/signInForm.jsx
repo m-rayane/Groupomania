@@ -11,7 +11,7 @@ export const SignInForm = ({ className, handleSubmit, handleChange }) => {
                         Password
                     </FormField> 
                 </div>
-                <button className={ className + "__btn" }>Connect</button>
+                <button className={ className + "__btn" }>CONNECT</button>
           </form>         
     )
 }

@@ -5,7 +5,7 @@ export default function PageNotFound() {
     <div className="pageNotFound">
         <img src="" alt="" className="pageNotFound__image" />
         Page Not Found
-      <Link to="/home" className="pageNotFound__link">
+      <Link to="/" className="pageNotFound__link">
         Back to home page
       </Link>
     </div>

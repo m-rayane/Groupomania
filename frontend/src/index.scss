@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: rgb(145, 145, 145);
+  background-color: $colour-tertiary;;
 }
 
 code {
@@ -20,7 +20,6 @@ code {
 .container {
   display: flex;
   flex-direction: column;
-  max-width: 1400px;
   width: 100%;
 }
 
@@ -30,3 +29,6 @@ code {
   flex-direction: column;
 }
 
+textarea {
+  resize: none;
+}

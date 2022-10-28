@@ -1,0 +1,140 @@
+@import '../../utils/style/variables';
+
+.auth {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../../public/images/old-postcard-800x533.jpg');
+    box-shadow: $colour-tertiary 0px 10px 20px;
+    width: 80vw;
+    aspect-ratio: 1.5 / 1;
+    max-width: 500px;
+    &__header {
+        display: flex;
+        width: 100%;        
+        &__btn {
+            width: 50%;
+            aspect-ratio: 4/1;
+            border: 1px solid rgba($colour-tertiary, 0.75);
+            font-size: 0.7em;
+            font-weight: bold;
+            color: rgba($colour-tertiary, 0.5);
+            transition: all 0.2s ease-in-out;
+        }
+        & > .activeBtn {
+            font-size: 0.9em;
+            border-bottom: 0;
+            color: $colour-tertiary;
+        }
+    }
+    &__content {        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: 90%;
+        border: 1px solid rgba($colour-tertiary, 0.75);
+        border-top: 0;
+        & button {
+            position: absolute;
+            top: 94%;
+            background-color: $colour-secondary;
+            font-weight: bold;
+            color: $colour-tertiary;
+            border: 2px solid rgba($colour-tertiary, 0.5);
+            box-shadow: $colour-tertiary 0px 15px 30px;
+            width: 25%;
+            aspect-ratio: 3/1;
+
+        }
+        &__login, &__signUp {
+            width: 100%;
+            height: 100%;
+            &__form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100%;
+                &__fields {
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    flex-wrap: wrap;
+                    width: 100%;
+                    height: 100%;
+                    &__field {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 2% 5%;
+                        width: 50%;
+                        & > label {
+                            padding: 5px;
+                            text-align: center;
+                        }
+                        & > input {
+                            border: 1px solid rgba($colour-tertiary, 0.75);
+                            aspect-ratio: 7/1;
+                            box-shadow: $colour-tertiary 0px 1px 3px;
+                        }
+                    }
+                    &__field:nth-child(3) {
+                        width: 75%;
+                        & > input {
+                            aspect-ratio: 10.5/1;
+                        }
+                    }
+                }
+            }
+        }
+        &__login__form__fields__field {
+            padding: 2%;
+            width: 60%;
+        }
+        &__message {
+            position: absolute;
+            top: 115%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            // animation: 1s ease-out 1s forwards disapprearingMsg;
+            &__error {
+                color: $colour-primary;
+            }
+            &__validation {
+                color: greenyellow;
+            }
+        }
+
+    }
+}
+
+@keyframes disapprearingMsg {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.logout__confirmBox {
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../../public/images/old-postcard-800x533.jpg');
+    box-shadow: $colour-tertiary 0px 0px 20px;
+    width: 300px;
+    aspect-ratio: 1.5 / 1;
+
+}

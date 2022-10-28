@@ -1,4 +1,5 @@
 import { TextField } from "../Atoms/Form/formField";
+import { CancelButton, SendButton } from "../Atoms/buttons";
 
 export default function CommentForm ({className, handleSubmit, handleCancel, profilPicture, altPicture, firstName, lastName, defaultValue}) {
 
@@ -10,15 +11,16 @@ export default function CommentForm ({className, handleSubmit, handleCancel, pro
                         {firstName + ' ' + lastName}
                     </div>
                 </div>
-                <form className={className} onSubmit={handleSubmit}>
-                    <div>
-                        <TextField className={className + "__TextField"} name="comment" wrap="hard" placeHolder="Comment..." defaultValue={defaultValue}></TextField>
+                <form className={className+ "__form"} onSubmit={handleSubmit}>
+                    <div className={className + "__form__textField"}>
+                        <TextField name="comment" wrap="hard" placeHolder="Comment..." defaultValue={defaultValue}></TextField>
                     </div>
-                    <div>
-                        <button className={className + "__TextField__btn"} onClick={handleCancel}>Cancel</button>
-                        <button className={className + "__TextField__btn"}>Comment</button>
+                    <div className={className + "__form__btn"} >
+                        <CancelButton className={className + "__form__btn__cancel"} onClick={handleCancel}/>
+                        <SendButton className={className + "__form__btn__send"} />
                     </div>
                 </form>
             </div>
     )
 }
+
