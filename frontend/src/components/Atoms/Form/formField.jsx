@@ -1,8 +1,8 @@
-export const FormField = ({className, name, value, onChange, type, children}) => {
+export const FormField = ({className, name, defaultValue, onChange, type, children}) => {
     return (
         <div className={className}>
           <label htmlFor={name}>{children}</label>
-          <input type={type} id={name} name={name} value={value} onChange={onChange} required/>
+          <input type={type} id={name} name={name} defaultValue={defaultValue} onChange={onChange}/>
         </div>
     )
 }

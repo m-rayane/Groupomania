@@ -1,327 +1,395 @@
- @import "../../utils/style/variables";
+@import './variables';
 
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 button {
-    background-color: transparent;
-    border: 0;
-}
-
-
-svg {
-    width: 20px;
-    height: 20px;
+  background-color: transparent;
+  border: 0;
 }
 
 .isLoading {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba($colour-secondary, 0.25);
-    border-radius: 50%;
-    border-top-color: $colour-primary;
-    animation: spin 1s linear infinite;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba($colour-secondary, 0.25);
+  border-radius: 50%;
+  border-top-color: $colour-primary;
+  animation: spin 0.8s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  @-webkit-keyframes spin {
-    to { transform: rotate(360deg); }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg) rotateX(0deg) translateX(0px) rotate(0deg) scale(1);
   }
+  to {
+    transform: rotateY(360deg) rotateX(180deg) translateX(-50px) rotate(-20deg)
+      scale(0.2);
+  }
+}
 
+@keyframes turnCard {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
 
-.postCard, .postForm {    
-    list-style: none;
-    &__front {
-        display: flex;
-        flex-direction: column;
-        max-width: 800px;
-        font-size: 0.9em;
-        font-family: 'Dancing Script', cursive;
-        background-image: url('../../../public/images/old-postcard-800x533.jpg');
-        background-size: auto;
-        margin: 25px auto;
-        padding: 15px;
-        width: 90vw;
-        aspect-ratio: 1.5 / 1;
-        box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.2);
-        position: relative;
-        & > form {
-            position: absolute;
-            top: -25px;
-            left: 0;
-        }
-        &__header {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            height: 30%;
-            position: relative;
-            &__postImage {
-                position: relative;
-                width: 33%;
-                & img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            }
-            &__fileChoice {
-                position: absolute;
-                top: 65%;
-                left: 15%;
-                & label {
-                    background-color: $colour-secondary;
-                    box-shadow: 3px 3px 3px;
-                    padding: 5px 10px;
-                }
-                & input {
-                    visibility: hidden;
-                }
-            }
-            &__user {
-                display: flex;
-                flex-direction: column-reverse;
-                justify-content: space-between;
-                align-items: flex-end;
-                width: 65%;
-                &__name {
-                    font-size: 0.8em;
-                }
-                &__picture {
-                    width: 100%;
-                    position: relative;
-                    top: 30%;
-                    right: -40%;
-                    rotate: 3deg;
-                    & > * {
-                        position: absolute;                       
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                    }
-                    // ratio 42% / 50%
-                    &__image {
-                        width: 12.6%;
-                        aspect-ratio: 1/1.47;
-                        object-fit: cover;
-                        z-index: 6;
-                    }
-                    &__border {
-                        width: 15%;
-                        z-index: 5;
-                    }
-                }
-            }
-        }
-        &__content {
-            align-items: center;
-            width: 100%;
-            height: 50%;
-            padding: 10px 0;
-            & textarea {
-                width: 100%;
-                // height: 100px;
-                word-wrap: break-word;            
-            }
-        }
+.turnCard {
+  animation: turnCard 0.3s ease-in-out forwards;
+}
 
-        &__footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            &__modify {
-                display: flex;
-                justify-content: space-around;
-                width: 75px;
-                & svg {
-                    fill: $colour-tertiary;
-                }
-                & svg:hover {
-                    fill: $colour-primary;
-                }
-            }
-            &__like {
-                display: flex;
-                justify-content: space-around;
-                width: 50px;             
-                &--isLike {
-                    & svg {
-                        fill: $colour-primary;
-                        stroke: $colour-tertiary;
-                        stroke-width: 7;
-                    }
-                    & svg:hover {
-                        stroke: $colour-primary;
-                        stroke-width: 10;
-                    }
-                }
-                &--unLike {
-                    & svg {
-                        fill: none;
-                        stroke: $colour-tertiary;
-                        stroke-width: 7;
-                    }
-                    & svg:hover {
-                        stroke: $colour-primary;
-                        stroke-width: 10;
-                    }
-                }
-            }
-            &__commentBtn {
-                display: flex;
-                justify-content: space-around;
-                width: 50px;
-                & svg {
-                    fill: $colour-tertiary;
-                    stroke: $colour-tertiary;
-                    stroke-width: 7;
-                }
-                & svg:hover {
-                    fill: $colour-primary;
-                    stroke: $colour-primary;
-                    stroke-width: 3;
-                } 
-            }
-        }
-        &__comment {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 750px;
-            background-image: url('../../../public/images/old-postcard-800x533.jpg');
-            background-size: auto;
-            & textarea {
-                width: 100%;
-            }
-            &__new {
-                border: 2px dotted $colour-tertiary;
-                margin: 5px;
-                &:hover {
-                    border: 2px dotted $colour-primary;
-                }
-                &__commenter {                    
-                    display: flex;
-                    align-items: center;
-                    & > img {
-                        height: 25px;
-                    }
-                    &__name {
-                        padding-left: 10px;
-                        font-size: 0.8em;
-                    }
-                }
-                &__form {
-                    position: relative;
-                    display: flex;
-                    margin: 5px;
-                    &__textField {
-                        width: 90%;
-                    }
-                    &__btn {
-                        width: 10%;
-                        display: flex;
-                        justify-content: space-around;
-                        & svg {
-                            fill: $colour-tertiary;
-                        }
-                        & svg:hover {
-                            fill: $colour-primary;
-                            stroke: $colour-primary;
-                            stroke-width: 3;
-                        }
-                        &__cancel {
-                            scale: 0.7;
-                        }
-                    }
-                }
-            }
- 
-            &__content {
-                margin: 5px;
-                border: 2px dotted $colour-tertiary;
-                background-color: rgba($colour-secondary, 0.5) ;
-                &__commenter {                    
-                    display: flex;
-                    align-items: center;
-                    & > img {
-                        height: 25px;
-                    }
-                    &__name {
-                        padding-left: 10px;
-                        font-size: 0.8em;
-                    }
-                }
-                &__text {
-                    padding-left: 20px;
-                }
-                &__modify {
-                    position: absolute;
-                    top: 5px;
-                    right: 5px;
-                    z-index: 5;
-                    display: none;
-                    justify-content: space-between;
-                    width: 50px;
-                    scale: 0.6;
-                    & svg {
-                        fill: $colour-tertiary;
-                        stroke: $colour-tertiary;
-                    }
-                    & svg:hover {
-                        fill: $colour-primary;
-                        stroke: $colour-primary;
-                    } 
-                    &:hover {
-                        display: flex;
-                        & ~ .postCard__front__comment__content {
-                            border: 2px dotted $colour-primary;
-                        }
-                    }
-                }
-                &:hover {
-                    border: 2px dotted $colour-primary;
-                    & + .postCard__front__comment__content__modify {
-                        display: flex;
-                    }
-                }
-                &__form {
-                    position: relative;
-                    display: flex;
-                    margin: 5px;
-                    &__textField {
-                        width: 90%;
-                    }
-                    &__btn {
-                        width: 10%;
-                        display: flex;
-                        justify-content: space-around;
-                        & svg {
-                            fill: $colour-tertiary;
-                        }
-                        & svg:hover {
-                            fill: $colour-primary;
-                            stroke: $colour-primary;
-                            stroke-width: 3;
-                        }
-                        &__cancel {
-                            scale: 0.7;
-                        }
-                    }
-                }
-            }
-
-        }
-
+.postCard,
+.postForm {
+  list-style: none;
+  & svg {
+    width: 20px;
+    height: 20px;
+  }
+  &__front {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-width: 800px;
+    font-family: 'Dancing Script', cursive;
+    background-image: url('../../../public/images/old-postcard-800x533.jpg');
+    background-size: auto;
+    margin: 25px 0;
+    padding: 4%;
+    width: 90vw;
+    aspect-ratio: 1.5 / 1;
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.2);
+    & > form {
+      position: absolute;
+      top: -25px;
+      left: 0;
     }
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 30%;
+      position: relative;
+      &__postImage {
+        position: relative;
+        width: 33%;
+        & img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      &__fileChoice {
+        position: absolute;
+        top: 65%;
+        left: 15%;
+        & label {
+          background-color: $colour-secondary;
+          box-shadow: 3px 3px 3px;
+          padding: 5px 10px;
+        }
+        & input {
+          visibility: hidden;
+        }
+      }
+      &__user {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 65%;
+        &__name {
+          font-size: 1em;
+        }
+        &__picture {
+          width: 100%;
+          position: relative;
+          top: 30%;
+          right: -40%;
+          rotate: 3deg;
+          & > * {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+          // ratio 42% / 50%
+          &__image {
+            width: 12.6%;
+            aspect-ratio: 1/1.47;
+            object-fit: cover;
+            z-index: 6;
+          }
+          &__border {
+            width: 15%;
+            z-index: 5;
+          }
+        }
+      }
+    }
+    &__content {
+      align-items: center;
+      width: 100%;
+      min-height: 50%;
+      padding: 10px 0;
+      font-size: calc(16px + 0.5vw);
+      & textarea {
+        width: 100%;
+        // height: 100px;
+        word-wrap: break-word;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__modify {
+        display: flex;
+        justify-content: space-around;
+        width: 75px;
+        & svg {
+          fill: $colour-tertiary;
+        }
+        & svg:hover {
+          fill: $colour-primary;
+        }
+      }
+      &__like {
+        display: flex;
+        justify-content: space-around;
+        width: 50px;
+        &--isLike {
+          & svg {
+            fill: $colour-primary;
+            stroke: $colour-tertiary;
+            stroke-width: 7;
+          }
+          & svg:hover {
+            stroke: $colour-primary;
+            stroke-width: 10;
+          }
+        }
+        &--unLike {
+          & svg {
+            fill: none;
+            stroke: $colour-tertiary;
+            stroke-width: 7;
+          }
+          & svg:hover {
+            stroke: $colour-primary;
+            stroke-width: 10;
+          }
+        }
+      }
+      &__commentBtn {
+        display: flex;
+        justify-content: space-around;
+        width: 50px;
+        & svg {
+          fill: $colour-tertiary;
+          stroke: $colour-tertiary;
+          stroke-width: 7;
+        }
+        & svg:hover {
+          fill: $colour-primary;
+          stroke: $colour-primary;
+          stroke-width: 3;
+        }
+      }
+    }
+    &__comment {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 750px;
+      background-image: url('../../../public/images/old-postcard-800x533.jpg');
+      background-size: auto;
+      & textarea {
+        width: 100%;
+      }
+      &__new {
+        border: 2px dotted $colour-tertiary;
+        margin: 5px;
+        &:hover {
+          border: 2px dotted $colour-primary;
+        }
+        &__commenter {
+          display: flex;
+          align-items: center;
+          position: relative;
+          &__picture {
+            height: 30px;
+            aspect-ratio: 1/1.47;
+            rotate: -2deg;
+            & > * {
+              position: absolute;
+              top: 80%;
+              left: 0;
+              transform: translate(-50%, -50%);
+            }
+            // ratio 42% / 50%
+            &__image {
+              height: 126%;
+              aspect-ratio: 1/1.47;
+              object-fit: cover;
+              z-index: 6;
+            }
+            &__border {
+              height: 150%;
+              z-index: 5;
+            }
+          }
+          &__name {
+            padding-left: 10px;
+          }
+        }
+
+        &__form {
+          position: relative;
+          display: flex;
+          margin: 5px;
+          &__textField {
+            width: 90%;
+            padding-left: 20px;
+          }
+          &__btn {
+            width: 10%;
+            display: flex;
+            justify-content: space-around;
+            & svg {
+              fill: $colour-tertiary;
+            }
+            & svg:hover {
+              fill: $colour-primary;
+              stroke: $colour-primary;
+              stroke-width: 3;
+            }
+            &__cancel {
+              scale: 0.7;
+            }
+          }
+        }
+      }
+
+      &__content {
+        margin: 5px;
+        border: 2px dotted $colour-tertiary;
+        background-color: rgba($colour-secondary, 0.5);
+
+        &__commenter {
+          display: flex;
+          align-items: center;
+          position: relative;
+          height: 100%;
+          &__picture {
+            height: 30px;
+            aspect-ratio: 1/1.47;
+            rotate: -2deg;
+            & > * {
+              position: absolute;
+              top: 80%;
+              left: 0;
+              transform: translate(-50%, -50%);
+            }
+            // ratio 42% / 50%
+            &__image {
+              height: 126%;
+              aspect-ratio: 1/1.47;
+              object-fit: cover;
+              z-index: 6;
+            }
+            &__border {
+              height: 150%;
+              z-index: 5;
+            }
+          }
+          &__name {
+            padding-left: 10px;
+          }
+        }
+        &__text {
+          padding: 5px 5px 5px 30px;
+          font-size: calc(16px + 0.5vw);
+        }
+        &__modify {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 5;
+          display: none;
+          justify-content: space-between;
+          width: 50px;
+          scale: 0.8;
+          & svg {
+            fill: $colour-tertiary;
+            stroke: $colour-tertiary;
+          }
+          & svg:hover {
+            fill: $colour-primary;
+            stroke: $colour-primary;
+          }
+          &:hover {
+            display: flex;
+            & ~ .postCard__front__comment__content {
+              border: 2px dotted $colour-primary;
+            }
+          }
+        }
+        &:hover {
+          border: 2px dotted $colour-primary;
+          & + .postCard__front__comment__content__modify {
+            display: flex;
+          }
+        }
+        &__form {
+          position: relative;
+          display: flex;
+          margin: 5px;
+          &__textField {
+            width: 90%;
+          }
+          &__btn {
+            width: 10%;
+            display: flex;
+            justify-content: space-around;
+            & svg {
+              fill: $colour-tertiary;
+            }
+            & svg:hover {
+              fill: $colour-primary;
+              stroke: $colour-primary;
+              stroke-width: 3;
+            }
+            &__cancel {
+              scale: 0.7;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__back {
+  }
 }
 
 .singleComment {
-    position: relative;
+  position: relative;
 }

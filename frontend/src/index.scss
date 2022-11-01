@@ -1,32 +1,20 @@
-@import "../src/utils/style/variables";
+@import '../src/utils/style/variables';
 
-*,
-::before,
-::after {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
-  background-color: $colour-tertiary;;
+  background-color: $colour-tertiary;
+  display: flex;
+  justify-content: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.main {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
 }
 
 textarea {

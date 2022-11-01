@@ -54,7 +54,7 @@ export default function Header() {
               <Link to="/createPost">
                 Create a post
               </Link>
-              <Link to="/profil">
+              <Link to="/profile">
                 Profil
               </Link>
             </>

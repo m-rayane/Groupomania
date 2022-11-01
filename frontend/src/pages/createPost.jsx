@@ -1,11 +1,11 @@
-import '../../utils/style/postOffice.scss';
+import '../utils/style/postOffice.scss';
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import {FormField, TextField} from  "../Atoms/Form/formField";
+import {FormField, TextField} from  "../components/Atoms/Form/formField";
 import FormData from "form-data";
-import PostServices from '../../api/Services/PostServices';
+import PostServices from '../api/Services/PostServices';
 
-import { PostContext } from "../../utils/contexts/postContext";
+import { PostContext } from "../utils/contexts/postContext";
 
 
 
@@ -44,8 +44,7 @@ export default function CreatePost() {
       }
 
       const handleImage = (e) => {
-        setPostImage(e.target.files[0]);
-        
+        setPostImage(e.target.files[0]);        
       }
 
       const imagePreview = () => {

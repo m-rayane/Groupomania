@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const fs = require('fs');
 const User = require('../models/User');
+
+const defaultPicture = "http://localhost:4200/images/default/default-avatar.png";
 
 // to signup a new user
 exports.signup = (req, res, next) => {
@@ -61,35 +63,46 @@ exports.getAllUsers = async (req, res, next) => {
     console.log('You are deconnected')
   }
   
-  exports.updateUser = (req, res, next) => {
-    const userObject = req.file
-      ? {
+  exports.editUser = (req, res, next) => {
+    if (req.body.isAdmin === 1 || req.body.userId === req.auth.userId) {
+      const userObject = req.file ? {
           profilePicture: `${req.protocol}://${req.get('host')}/images/${
-            req.file.filename
-          }`,
+            req.file.filename}`
+      } : { ...req.body };
+      User.findOne({_id: req.params.id})
+      .then((user) => {
+        if ( req.file && user.profilePicture !== defaultPicture) {
+          const filename = user.profilePicture.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => { console.log('Former image is removed')})
         }
-      : { ...req.body }
-    User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
-      .then(() => res.status(200).json({ message: 'User updated' }))
-      .catch((error) => res.status(400).json({ error }))
+        User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'User updated' }))
+        .catch((error) => res.status(400).json({ error }));
+        
+      })
+    } else {
+      res.status(401).json({ message : 'Not authorized'});
+    }
+    
+    
   }
   
-  exports.deleteUser = (req, res, next) => {
-    User.findOne({ _id: req.params.id }).then((user) => {
-      const filename = user.profilePicture.split('/images')[1]
-      fs.unlink(`images/${filename}`, () => {
-        User.deleteOne({ _id: req.params.id })
-          .then(() => {
-            res
-              .status(200)
-              .json({ message: "User and user's data has been delete" })
-          })
-          .catch((error) => res.status(400).json({ error }))
-      })
-      // }
-      if (!user) {
-        res.status(404).json({ message: 'No user to delete' })
-      }
-    })
-  }
+  // exports.deleteUser = (req, res, next) => {
+  //   User.findOne({ _id: req.params.id }).then((user) => {
+  //     const filename = user.profilePicture.split('/images')[1]
+  //     fs.unlink(`images/${filename}`, () => {
+  //       User.deleteOne({ _id: req.params.id })
+  //         .then(() => {
+  //           res
+  //             .status(200)
+  //             .json({ message: "User and user's data has been delete" })
+  //         })
+  //         .catch((error) => res.status(400).json({ error }))
+  //     })
+  //     // }
+  //     if (!user) {
+  //       res.status(404).json({ message: 'No user to delete' })
+  //     }
+  //   })
+  // }
   

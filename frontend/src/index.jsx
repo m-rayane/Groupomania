@@ -7,9 +7,9 @@ import './index.scss';
 
 import Header from './components/Header/header';
 import Login from './pages/login';
-import CreatePost from './components/Post/createPost';
+import CreatePost from './pages/createPost';
 import PostOffice from './pages/postOffice';
-import Profil from './pages/profil';
+import Profile from './pages/profile';
 import PageNotFound from './pages/pageNotFound';
 // import Auth from './utils/contexts/Auth';
 import { PostProvider } from './utils/contexts/postContext';
@@ -34,7 +34,7 @@ function App() {
                               <Route exact path="/" element={<PostOffice />} />
                               <Route path="/login" element={<Login />} />
                               <Route path="/createPost" element={<CreatePost />} />
-                              <Route path="/profil" element={<Profil />} />
+                              <Route path="/profile" element={<Profile />} />
                               <Route path="*" element={<PageNotFound />}></Route>
                           </Routes>
                         </div>

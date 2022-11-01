@@ -68,17 +68,11 @@ if (req.body.isAdmin === 1 || req.body.posterId === req.auth.userId) {
     .then((post) => {
       if ( req.file ) {
         const filename = post.image.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-        Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
-        .then(() => res.status(200).json({message : 'Article is modified'}))
-        .catch(error => res.status(401).json({ error }));
-        })
-      } else {
-        Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
-        .then(() => res.status(200).json({message : 'Article is modified'}))
-        .catch(error => res.status(401).json({ error }));
+        fs.unlink(`images/${filename}`, () => {})
       }
-       
+      Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
+      .then(() => res.status(200).json({message : 'Article is modified'}))
+      .catch(error => res.status(401).json({ error }));                
     })
     .catch((error) => {
         res.status(400).json({ error });
