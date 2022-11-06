@@ -1,7 +1,7 @@
 import { CancelButton } from '../Atoms/buttons'
-import { ConfirmButton } from '../Atoms/buttons'
+import { SendButton } from '../Atoms/buttons'
 
-export const ConfirmButtons = ({
+export const PostButtons = ({
   className,
   cancelHandleClick,
   confirmHandleClick,
@@ -15,8 +15,8 @@ export const ConfirmButtons = ({
         onClick={cancelHandleClick}
         value={editValue}
       />
-      <ConfirmButton
-        className={className + '__confirm'}
+      <SendButton
+        className={className + '__send'}
         onClick={confirmHandleClick}
         value={deleteValue}
       />

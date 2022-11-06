@@ -1,5 +1,5 @@
-import { TextField } from '../Atoms/Form/formField'
-import { CancelButton, SendButton } from '../Atoms/buttons'
+import { TextField } from '../Atoms/fields'
+import { PostButtons } from './postButtons'
 
 export default function CommentForm({
   className,
@@ -42,11 +42,10 @@ export default function CommentForm({
           ></TextField>
         </div>
         <div className={className + '__form__btn'}>
-          <CancelButton
-            className={className + '__form__btn__cancel'}
-            onClick={handleCancel}
+          <PostButtons
+            className={className + '__form__btn'}
+            cancelHandleClick={handleCancel}
           />
-          <SendButton className={className + '__form__btn__send'} />
         </div>
       </form>
     </div>

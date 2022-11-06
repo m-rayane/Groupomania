@@ -1,4 +1,5 @@
 @import './variables';
+@import './mixins';
 
 .bold {
   font-weight: bold;
@@ -89,11 +90,12 @@ button {
       position: relative;
       &__postImage {
         position: relative;
-        width: 33%;
+        width: 35%;
         & img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          box-shadow: 0px 0px 30px -10px;
         }
       }
       &__fileChoice {
@@ -109,20 +111,80 @@ button {
           visibility: hidden;
         }
       }
+      &__data {
+        position: relative;
+        width: 40%;
+        &__stamp {
+          @media (max-width: 768px) {
+            scale: 0.8;
+            top: -20%;
+            right: -55%;
+          }
+          @media (max-width: 600px) {
+            scale: 0.6;
+            top: -30%;
+            right: -40%;
+          }
+          @media (max-width: 480px) {
+            scale: 0.5;
+            top: -60%;
+            right: -25%;
+          }
+          @media (max-width: 400px) {
+            scale: 0.4;
+            top: -80%;
+            right: 0;
+          }
+          position: relative;
+          width: 260px;
+          height: 140px;
+          right: -70%;
+          z-index: 2;
+          & * {
+            position: absolute;
+          }
+          & svg {
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            & .stampedSvg__waves {
+              fill: rgba($colour-primary, 0.4);
+              stroke: rgba($colour-primary, 0.7);
+              stroke-width: 1;
+            }
+
+            & .stampedSvg__circle {
+              fill: rgba($colour-primary, 0.2);
+              stroke: rgba($colour-primary, 0.5);
+              stroke-width: 3;
+            }
+          }
+          &__date {
+            top: 42%;
+            left: 12%;
+            font-weight: bold;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold',
+              sans-serif;
+            color: rgba($colour-primary, 0.5);
+            rotate: (-20deg);
+          }
+        }
+      }
       &__user {
         display: flex;
         flex-direction: column-reverse;
         justify-content: space-between;
         align-items: flex-end;
-        width: 65%;
+        width: 25%;
+        position: relative;
         &__name {
           font-size: 1em;
         }
         &__picture {
           width: 100%;
           position: relative;
-          top: 30%;
-          right: -40%;
+          top: 35%;
+          right: -20%;
           rotate: 3deg;
           & > * {
             position: absolute;
@@ -132,35 +194,47 @@ button {
           }
           // ratio 42% / 50%
           &__image {
-            width: 12.6%;
+            width: 37.8%;
             aspect-ratio: 1/1.47;
             object-fit: cover;
-            z-index: 6;
+            z-index: 1;
           }
           &__border {
-            width: 15%;
-            z-index: 5;
+            width: 45%;
+            z-index: 2;
           }
         }
       }
     }
     &__content {
+      display: flex;
       align-items: center;
       width: 100%;
       min-height: 50%;
       padding: 10px 0;
       font-size: calc(16px + 0.5vw);
+      flex: 1 1 auto;
+      &__message {
+        width: 100%;
+      }
       & textarea {
         width: 100%;
-        // height: 100px;
+        height: 150px;
+        padding: 5px 10px;
         word-wrap: break-word;
       }
     }
 
     &__footer {
+      position: relative;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
+      height: 10%;
+      & svg {
+        cursor: pointer;
+      }
       &__modify {
         display: flex;
         justify-content: space-around;
@@ -170,6 +244,9 @@ button {
         }
         & svg:hover {
           fill: $colour-primary;
+        }
+        &__confirmBox {
+          @include confirmBox;
         }
       }
       &__like {
@@ -214,6 +291,41 @@ button {
           stroke-width: 3;
         }
       }
+      &__error {
+        position: absolute;
+        bottom: -75px;
+        width: 100%;
+        color: $colour-primary;
+        text-align: center;
+        font-size: 1.5em;
+      }
+      &__createPostBtn {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        & button {
+          padding: 0 5%;
+        }
+        & svg {
+          width: 40px;
+          height: 100%;
+        }
+        & #sendSvg {
+          width: 50px;
+          stroke: black;
+          stroke-width: 10;
+        }
+        & #cancelSvg:hover {
+          fill: rgba($colour-primary, 0.8);
+          scale: 1.2;
+        }
+        & #sendSvg:hover {
+          fill: rgba(green, 0.8);
+          stroke: rgba(green, 0.8);
+          scale: 1.2;
+        }
+      }
     }
     &__comment {
       display: flex;
@@ -222,8 +334,12 @@ button {
       max-width: 750px;
       background-image: url('../../../public/images/old-postcard-800x533.jpg');
       background-size: auto;
+      & svg {
+        cursor: pointer;
+      }
       & textarea {
         width: 100%;
+        padding: 2px 10px;
       }
       &__new {
         border: 2px dotted $colour-tertiary;
@@ -268,7 +384,7 @@ button {
           margin: 5px;
           &__textField {
             width: 90%;
-            padding-left: 20px;
+            padding: 0 10px 0 20px;
           }
           &__btn {
             width: 10%;
@@ -276,14 +392,28 @@ button {
             justify-content: space-around;
             & svg {
               fill: $colour-tertiary;
+              margin-right: 5px;
             }
-            & svg:hover {
-              fill: $colour-primary;
-              stroke: $colour-primary;
-              stroke-width: 3;
-            }
+            // & svg:hover {
+            //   fill: $colour-primary;
+            //   stroke: $colour-primary;
+            //   stroke-width: 3;
+            // }
             &__cancel {
-              scale: 0.7;
+              scale: 0.8;
+              & svg:hover {
+                fill: $cancel-color;
+                stroke: $cancel-color;
+                stroke-width: 3;
+              }
+            }
+            &__send {
+              scale: 1.2;
+              & svg:hover {
+                fill: $confirm-color;
+                stroke: $confirm-color;
+                stroke-width: 3;
+              }
             }
           }
         }
@@ -352,6 +482,9 @@ button {
               border: 2px dotted $colour-primary;
             }
           }
+          &__confirmBox {
+            @include confirmBox;
+          }
         }
         &:hover {
           border: 2px dotted $colour-primary;
@@ -385,8 +518,6 @@ button {
         }
       }
     }
-  }
-  &__back {
   }
 }
 

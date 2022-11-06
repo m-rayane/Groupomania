@@ -1,21 +1,20 @@
 import '../utils/style/postOffice.scss'
 
-import { FormField, TextField } from '../components/Atoms/Form/formField'
+import { FormField, TextField } from '../components/Atoms/fields'
 import CommentForm from '../components/Molecules/commentForm'
 import Comment from '../components/Molecules/comment'
 
-import {
-  LikeButton,
-  CommentButton,
-  TurnButton,
-} from '../components/Atoms/buttons'
+import { LikeButton, CommentButton } from '../components/Atoms/buttons'
+import { PostButtons } from '../components/Molecules/postButtons'
+
+import { StampedSvg } from '../components/Atoms/svg'
 import { ModifyButtons } from '../components/Molecules/modifyButtons'
 
-import React, { useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
 
 import FormData from 'form-data'
 import Moment from 'react-moment'
+import ConfirmBox from '../components/Molecules/confirmBox'
 
 import stamp from '../utils/images/stamp-rectangle-white.png'
 
@@ -25,26 +24,22 @@ import PostServices from '../api/Services/PostServices'
 const postServices = new PostServices()
 
 export default function PostOffice() {
-  const { usersData, postsData, userIdData, getPosts, tokenLS, isLoading } =
+  const { usersData, postsData, userIdData, getPosts, isLoading } =
     useContext(PostContext)
-  const navigate = useNavigate()
 
   const [isEdited, setIsEdited] = useState(false)
+  const [isDeletePost, setIsDeletePost] = useState(false)
   const [isEditedComment, setIsEditedComment] = useState(false)
+  const [isDeleteComment, setIsDeleteComment] = useState(false)
   const [targetPost, setTargetPost] = useState('')
   const [targetComment, setTargetComment] = useState('')
+  const [error, setError] = useState('')
 
   // const [turnCard, setTurnCard] = useState('')
 
   const [postImage, setPostImage] = useState(null)
 
   const [isComDisplay, setIsComDisplay] = useState(false)
-
-  useEffect(() => {
-    if (!tokenLS) {
-      navigate('/login', { replace: true })
-    }
-  })
 
   return (
     <>
@@ -93,6 +88,11 @@ export default function PostOffice() {
             setTargetPost(id)
           }
 
+          const handleDeletePost = (id) => {
+            setIsDeletePost(!isDeletePost)
+            setTargetPost(id)
+          }
+
           const editPost = async (e) => {
             e.preventDefault()
             const formData = new FormData()
@@ -112,6 +112,7 @@ export default function PostOffice() {
           const deletePost = async () => {
             try {
               await postServices.deletePost(post._id)
+              setIsDeletePost('')
               getPosts()
             } catch (error) {
               console.log(error)
@@ -125,17 +126,23 @@ export default function PostOffice() {
 
           const submitComment = async (e) => {
             e.preventDefault()
-            const commentData = {
-              commenterId: userIdData._id,
-              text: e.target['comment'].value,
-            }
-            try {
-              await postServices.postComment(post._id, commentData)
+            if (e.target['comment'].value.trim() === '') {
               e.target['comment'].value = ''
-              setIsComDisplay(true)
-              getPosts()
-            } catch (error) {
-              console.log(error)
+              setError('The content of your comment is invalid !')
+            } else {
+              const commentData = {
+                commenterId: userIdData._id,
+                text: e.target['comment'].value,
+              }
+              try {
+                await postServices.postComment(post._id, commentData)
+                e.target['comment'].value = ''
+                setTargetPost(post._id)
+                setIsComDisplay(true)
+                getPosts()
+              } catch (error) {
+                console.log(error)
+              }
             }
           }
 
@@ -159,7 +166,7 @@ export default function PostOffice() {
               {isLoading ? (
                 <div className="isLoading"></div>
               ) : (
-                <div>
+                <>
                   <div className="postCard__front">
                     {(!isEdited || targetPost !== post._id) && (
                       <>
@@ -176,10 +183,20 @@ export default function PostOffice() {
                               />
                             </div>
                           )}
+                          <div className="postCard__front__header__data">
+                            <div className="postCard__front__header__data__stamp">
+                              <StampedSvg />
+                              <Moment
+                                format="DD/MM/YY"
+                                className="postCard__front__header__data__stamp__date"
+                              >
+                                {post.createdAt}
+                              </Moment>
+                            </div>
+                          </div>
                           <div className="postCard__front__header__user">
                             <div className="postCard__front__header__user__name">
-                              Send by {poster._firstName} {poster._lastName} il
-                              y a ...
+                              {poster._firstName} {poster._lastName}
                             </div>
                             <div className="postCard__front__header__user__picture">
                               <img
@@ -235,13 +252,25 @@ export default function PostOffice() {
                           </div>
                           {isUserPost && (
                             <>
+                              {isDeletePost && targetPost === post._id && (
+                                <ConfirmBox
+                                  name={'delete post'}
+                                  className={'postCard__front__footer__modify'}
+                                  handleCancel={() => {
+                                    setIsDeletePost(!isDeletePost)
+                                  }}
+                                  handleCconfirm={deletePost}
+                                />
+                              )}
                               <div className="postCard__front__footer__modify">
                                 <ModifyButtons
                                   className="postCard__front__footer__modify"
                                   editHandleClick={() => {
                                     handleEditPost(post._id)
                                   }}
-                                  deleteHandleClick={deletePost}
+                                  deleteHandleClick={() => {
+                                    handleDeletePost(post._id)
+                                  }}
                                   editValue=""
                                   deleteValue=""
                                 />
@@ -260,6 +289,7 @@ export default function PostOffice() {
                                 const isUserComment =
                                   commenterData._id === userIdData._id ||
                                   userIdData.isAdmin === 1
+
                                 const deleteComment = async () => {
                                   const deleteCommentData = {
                                     commentId: comment._id,
@@ -269,6 +299,7 @@ export default function PostOffice() {
                                       post._id,
                                       deleteCommentData
                                     )
+                                    setIsDeleteComment('')
                                     getPosts()
                                   } catch (error) {
                                     console.log(error)
@@ -276,6 +307,10 @@ export default function PostOffice() {
                                 }
                                 const handleEditComment = (id) => {
                                   setIsEditedComment(!isEditedComment)
+                                  setTargetComment(id)
+                                }
+                                const handleDeleteComment = (id) => {
+                                  setIsDeleteComment(!isDeleteComment)
                                   setTargetComment(id)
                                 }
 
@@ -302,6 +337,19 @@ export default function PostOffice() {
                                     className="singleComment"
                                     key={comment._id}
                                   >
+                                    {isDeleteComment &&
+                                      targetComment === comment._id && (
+                                        <ConfirmBox
+                                          name={'delete comment'}
+                                          className={
+                                            'postCard__front__footer__modify'
+                                          }
+                                          handleCancel={() => {
+                                            setIsDeleteComment(!isDeleteComment)
+                                          }}
+                                          handleCconfirm={deleteComment}
+                                        />
+                                      )}
                                     {(!isEditedComment ||
                                       targetComment !== comment._id) && (
                                       <Comment
@@ -341,7 +389,9 @@ export default function PostOffice() {
                                           editHandleClick={() => {
                                             handleEditComment(comment._id)
                                           }}
-                                          deleteHandleClick={deleteComment}
+                                          deleteHandleClick={() => {
+                                            handleDeleteComment(comment._id)
+                                          }}
                                           profilPicture={
                                             commenterData._profilePicture
                                           }
@@ -392,12 +442,32 @@ export default function PostOffice() {
                                 Choose a new image
                               </FormField>
                             </div>
-                            <div className="postForm__front__header__user">
-                              <div className="postForm__front__header__user__name">
-                                Send by {poster._firstName} {poster._lastName}
+                            <div className="postCard__front__header__data">
+                              <div className="postCard__front__header__data__stamp">
+                                <StampedSvg />
+                                <Moment
+                                  format="DD/MM/YY"
+                                  className="postCard__front__header__data__stamp__date"
+                                >
+                                  {post.createdAt}
+                                </Moment>
                               </div>
-                              <div className="postForm__front__header__user__picture">
-                                <img src={poster._profilePicture} alt="" />
+                            </div>
+                            <div className="postCard__front__header__user">
+                              <div className="postCard__front__header__user__name">
+                                {poster._firstName} {poster._lastName}
+                              </div>
+                              <div className="postCard__front__header__user__picture">
+                                <img
+                                  src={stamp}
+                                  className="postCard__front__header__user__picture__border"
+                                  alt=""
+                                />
+                                <img
+                                  src={poster._profilePicture}
+                                  className="postCard__front__header__user__picture__image"
+                                  alt=""
+                                />
                               </div>
                             </div>
                           </div>
@@ -411,16 +481,11 @@ export default function PostOffice() {
                             ></TextField>
                           </div>
                           <div className="postForm__front__footer">
-                            <div>
-                              <button
-                                className="postForm__front__footer__btn"
-                                onClick={() => setIsEdited(false)}
-                              >
-                                Cancel
-                              </button>
-                              <button className="postForm__front__footer__btn">
-                                Post
-                              </button>
+                            <div className="postForm__front__footer__createPostBtn">
+                              <PostButtons
+                                className="postForm__front__footer__createPostBtn"
+                                cancelHandleClick={() => setIsEdited(false)}
+                              />
                             </div>
                           </div>
                         </form>
@@ -430,7 +495,7 @@ export default function PostOffice() {
                   {/* <div className="postCard__back">
                     <img src={post._image} alt="illustration of the post" />
                   </div> */}
-                </div>
+                </>
               )}
             </li>
           )

@@ -8,15 +8,18 @@
 
 body {
   background-color: $colour-tertiary;
-  display: flex;
-  justify-content: center;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 textarea {
   resize: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  cursor: pointer;
 }

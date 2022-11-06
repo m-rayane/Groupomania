@@ -1,18 +1,92 @@
 @import '../../utils/style/variables';
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 50px;
-  padding: 30px;
+  max-width: 1000px;
+  padding: 10px;
   background-color: $colour-tertiary;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    padding: 10px 0 0 0;
+  }
+  &__logo {
+    height: 50px;
+  }
   &__nav {
     display: flex;
-    font-size: 20px;
-    &__link {
-      text-decoration: none;
+    justify-content: space-between;
+    width: 200px;
+    @media (max-width: 600px) {
+      justify-content: space-evenly;
+      width: 100%;
+    }
+    & svg {
+      fill: rgba($colour-primary, 0.8);
+    }
+    & svg:hover {
+      fill: $colour-primary;
+      scale: 1.2;
+    }
+    &__postOffice {
+      fill: none;
+      & #postOfficeSvg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    &__createPost {
+      width: 40px;
+      height: 40px;
+    }
+    &__profile {
+      width: 22px;
+      height: 22px;
+    }
+    &__logout {
+      &__btn {
+        width: 30px;
+        height: 30px;
+      }
+      &__confirmBox {
+        z-index: 5;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        background-image: url('../../../public/images/old-postcard-800x533.jpg');
+        box-shadow: $colour-tertiary 0px 0px 20px;
+        width: 300px;
+        aspect-ratio: 1.5 / 1;
+        &__title {
+          font-family: 'Dancing Script', cursive;
+          font-size: 30px;
+        }
+        &__btn {
+          display: flex;
+          justify-content: space-evenly;
+          width: 50%;
+        }
+        & svg {
+          width: 40px;
+          height: 40px;
+          fill: black;
+        }
+        & #cancelSvg:hover {
+          fill: rgba($colour-primary, 0.8);
+          scale: 1.2;
+        }
+        & #confirmSvg:hover {
+          fill: rgba(green, 0.8);
+          scale: 1.2;
+        }
+      }
     }
   }
 }
