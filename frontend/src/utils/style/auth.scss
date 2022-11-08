@@ -75,8 +75,8 @@
       box-shadow: rgb(0, 200, 0) 0px 0px 60px;
     }
     & .errorBtn {
-      color: $colour-primary;
-      box-shadow: $colour-primary 0px 0px 60px;
+      color: $colour-primary !important;
+      box-shadow: $colour-primary 0px 0px 60px !important;
     }
     &__login,
     &__signUp {

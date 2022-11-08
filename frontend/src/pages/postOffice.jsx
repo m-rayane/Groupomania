@@ -21,11 +21,18 @@ import stamp from '../utils/images/stamp-rectangle-white.png'
 import { PostContext } from '../utils/contexts/postContext'
 
 import PostServices from '../api/Services/PostServices'
+import { useEffect } from 'react'
 const postServices = new PostServices()
 
 export default function PostOffice() {
-  const { usersData, postsData, userIdData, getPosts, isLoading } =
-    useContext(PostContext)
+  const {
+    usersData,
+    postsData,
+    userIdData,
+    getPosts,
+    isLoading,
+    setIsLoading,
+  } = useContext(PostContext)
 
   const [isEdited, setIsEdited] = useState(false)
   const [isDeletePost, setIsDeletePost] = useState(false)
@@ -53,9 +60,10 @@ export default function PostOffice() {
           const isUserPost =
             poster &&
             (userIdData._id === poster._id || userIdData.isAdmin === 1)
-          const isUserComment =
-            poster &&
-            (userIdData._id === poster._id || userIdData.isAdmin === 1)
+
+          if (poster === undefined) {
+            setIsLoading(true)
+          }
 
           const handleImage = (e) => {
             setPostImage(e.target.files[0])
@@ -96,14 +104,24 @@ export default function PostOffice() {
           const editPost = async (e) => {
             e.preventDefault()
             const formData = new FormData()
-
+            if (postImage === null) {
+              formData.append('editerId', userIdData._id)
+              formData.append('isAdmin', userIdData.isAdmin)
+              formData.append('message', e.target['editedPostMessage'].value)
+            } else {
+              formData.append('editerId', userIdData._id)
+              formData.append('isAdmin', userIdData.isAdmin)
+              formData.append('message', e.target['editedPostMessage'].value)
+              formData.append('image', postImage)
+            }
+            console.log(...formData)
             try {
               await postServices
                 .putPost(post._id, formData)
                 .then((res) => console.log(res))
               setIsEdited(!isEdited)
               setPostImage(null)
-              // getPosts();
+              getPosts()
             } catch (error) {
               console.log(error)
             }

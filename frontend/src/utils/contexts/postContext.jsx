@@ -13,42 +13,59 @@ export const PostProvider = ({ children }) => {
   const [userIdData, setUserIdData] = useState([])
   const [postsData, setPostsData] = useState([])
   const tokenLS = localStorage.getItem('token')
-  const userId = localStorage.getItem('id')
+  const userId = localStorage.getItem('userId')
+  const expirationDate = localStorage.getItem('expirationDate')
   const [isLoading, setIsLoading] = useState(true)
 
   const navigate = useNavigate()
 
-  // console.log(userId)
+  useEffect(() => {
+    if (expirationDate && expirationDate * 1000 < Date.now()) {
+      localStorage.clear()
+      navigate('/login', { replace: true })
+      userServices.logoutUser()
+    }
+  }, [expirationDate, navigate])
 
   useEffect(() => {
-    const getUserId = async () => {
-      const res = await userServices.getUserId(userId)
-      setIsLoading(true)
-      setUserIdData(res)
-      setIsLoading(false)
+    if (userId) {
+      const getUserId = async () => {
+        setIsLoading(true)
+        const response = await userServices.getUserId(userId)
+        setUserIdData(response)
+        setIsLoading(false)
+      }
+      getUserId()
+    } else {
+      console.log('User not connected')
+      localStorage.clear()
+      navigate('/login', { replace: true })
     }
-    userId ? getUserId() : navigate('/login', { replace: true })
   }, [userId, navigate])
 
   useEffect(() => {
-    const getUsers = async () => {
-      const res = await userServices.getUser()
-      setIsLoading(true)
-      setUsersData(res)
-      setIsLoading(false)
+    if (userId) {
+      const getUsers = async () => {
+        setIsLoading(true)
+        const response = await userServices.getUser()
+        setUsersData(response)
+        setIsLoading(false)
+      }
+      getUsers()
     }
-    userId ? getUsers() : console.log('User not connected')
   }, [userId])
 
   useEffect(() => {
-    const getPosts = async () => {
-      const res = await postServices.getPost()
-      setIsLoading(true)
-      setPostsData(res.reverse())
-      setIsLoading(false)
+    if (userId) {
+      const getPosts = async () => {
+        setIsLoading(true)
+        const response = await postServices.getPost()
+        setPostsData(response.reverse())
+        setIsLoading(false)
+      }
+      getPosts()
     }
-    userId ? getPosts() : navigate('/login', { replace: true })
-  }, [userId, navigate])
+  }, [userId])
 
   // function for re-rendering on every new api call
   const getPosts = async () => {
@@ -87,6 +104,7 @@ export const PostProvider = ({ children }) => {
         getPosts,
         getUserId,
         getUsers,
+        setIsLoading,
       }}
     >
       {children}

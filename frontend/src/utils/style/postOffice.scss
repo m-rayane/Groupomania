@@ -363,14 +363,14 @@ button {
             }
             // ratio 42% / 50%
             &__image {
-              height: 126%;
-              aspect-ratio: 1/1.47;
+              height: 135%;
+              aspect-ratio: 1/1.5;
               object-fit: cover;
-              z-index: 6;
+              z-index: 5;
             }
             &__border {
               height: 150%;
-              z-index: 5;
+              z-index: 6;
             }
           }
           &__name {

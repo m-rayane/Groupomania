@@ -1,12 +1,13 @@
-// atoms
+// molecules
 import { SignInForm } from '../components/Molecules/signInForm'
 import { SignUpForm } from '../components/Molecules/signUpForm'
 
 import '../utils/style/auth.scss'
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { PostContext } from '../utils/contexts/postContext'
 import UserService from '../api/Services/UserServices'
 const userServices = new UserService()
 
@@ -14,12 +15,12 @@ const regexName =
   /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]*$/i
 const regexEmail = /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/i
 const regexPassword =
-  /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]*$/i
+  /^(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()]*$/i
 
 export default function Login() {
+  const { usersData, getUserId } = useContext(PostContext)
   const navigate = useNavigate()
 
-  const [validation, setValidation] = useState('')
   const [error, setError] = useState('')
   const [isSignIn, setIsSignIn] = useState(true)
   const [activeSignInBtn, setActiveSignInBtn] = useState('activeBtn')
@@ -40,6 +41,10 @@ export default function Login() {
     const lastNameTest = regexName.test(lastNameValue)
     const emailTest = regexEmail.test(emailValue)
     const passwordTest = regexPassword.test(passwordValue)
+
+    const isEmail = usersData.find((user) => user._email === emailValue)
+    isEmail ? setError('Email already exist') : console.log('email ok')
+
     if (firstNameTest === false || firstNameValue.trim() === '') {
       setError('First Name is not valid !')
       setErrorBtn('errorBtn')
@@ -50,7 +55,9 @@ export default function Login() {
       setError('Email is not valid !')
       setErrorBtn('errorBtn')
     } else if (passwordTest === false || passwordValue.trim() === '') {
-      setError('Password is not valid !')
+      setError(
+        'Password is not valid ! It expects minimum 8 characters, at least 1 lowercase letter, 1 uppercase letter, and 1 digit. Special characters ! @ # $ % ^ & * are also authorized.'
+      )
       setErrorBtn('errorBtn')
     } else if (passwordValue !== confirmPasswordValue) {
       setError('Passwords do not match')
@@ -64,14 +71,32 @@ export default function Login() {
           password: passwordValue,
         }
         await userServices.createUser(userData)
-        e.target['firstName'].value = ''
-        e.target['lastName'].value = ''
-        e.target['signUpEmail'].value = ''
-        e.target['signUpPassword'].value = ''
-        e.target['confirmPassword'].value = ''
-        setValidation('Account successfully created')
       } catch (err) {
-        setError('An error occurs. Try again later')
+        console.error(err)
+      } finally {
+        if (
+          !isEmail &&
+          emailValue &&
+          passwordValue &&
+          passwordValue === confirmPasswordValue
+        ) {
+          const email = emailValue
+          const password = passwordValue
+          const userData = {
+            email: email,
+            password: password,
+          }
+          await userServices.logInUser(userData).then((response) => {
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('userId', response.data.userId)
+            localStorage.setItem('isAdmin', response.data.isAdmin)
+            localStorage.setItem(
+              'expirationDate',
+              response.data.tokenExpiration
+            )
+          })
+          navigate('/', { replace: true })
+        }
       }
     }
   }
@@ -89,13 +114,11 @@ export default function Login() {
       }
       await userServices.logInUser(userData).then((response) => {
         localStorage.setItem('token', response.data.token)
-        localStorage.setItem('id', response.data.userId)
+        localStorage.setItem('userId', response.data.userId)
         localStorage.setItem('isAdmin', response.data.isAdmin)
-        console.log(response.data.isAdmin)
-        console.log({ ...localStorage })
+        localStorage.setItem('expirationDate', response.data.tokenExpiration)
       })
       navigate('/', { replace: true })
-      window.location.reload()
     } catch (err) {
       setErrorBtn('errorBtn')
       setError(
@@ -116,7 +139,6 @@ export default function Login() {
     setActiveSignUpBtn('')
     setIsSignIn(true)
     setError('')
-    setValidation('')
     setErrorBtn('')
   }
 
@@ -125,24 +147,20 @@ export default function Login() {
     setActiveSignUpBtn('activeBtn')
     setIsSignIn(false)
     setError('')
-    setValidation('')
     setErrorBtn('')
   }
 
   const handleChange = async () => {
     setError('')
-    setValidation('')
     setErrorBtn('')
   }
 
   return (
     <>
       <h1 className="login__message">
-        Welcome to our
+        Welcome to the
         <br />
-        <span>Company</span>
-        <br />
-        POST OFFICE !
+        <span>POST OFFICE !</span>
       </h1>
       <div className="auth">
         <div className="auth__header">
@@ -186,14 +204,7 @@ export default function Login() {
           )}
 
           <div className="auth__content__message">
-            {{ error } && (
-              <div className="auth__content__message__error">{error}</div>
-            )}
-            {{ validation } && (
-              <div className="auth__content__message__validation">
-                {validation}
-              </div>
-            )}
+            <div className="auth__content__message__error">{error}</div>
           </div>
         </div>
       </div>

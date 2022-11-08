@@ -1,14 +1,12 @@
 // libraries
 import axios from 'axios'
 
-const tokenLS = localStorage.getItem("token");
+const tokenLS = localStorage.getItem('token')
 
 // axios configuration
 axios.defaults.baseURL = 'http://localhost:4200/api'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Authorization'] = tokenLS
-axios.defaults.timeout = 6000
-axios.defaults.withCredentials = true
 
 // axios request
 export const getRequest = async (url) => {
@@ -23,7 +21,7 @@ export const getRequest = async (url) => {
 export const postRequest = async (url, data = null) => {
   const result = await axios.post(url, data)
   if (result.status === 201 || result.status === 200) {
-    return result;
+    return result
   } else {
     throw result.status
   }
@@ -46,4 +44,3 @@ export const putRequest = async (url, data = null) => {
     throw result.status
   }
 }
-

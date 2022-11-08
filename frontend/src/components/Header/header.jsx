@@ -23,8 +23,9 @@ export default function Header() {
   const handleLogoutConfirm = async (e) => {
     e.preventDefault()
     localStorage.clear()
-    navigate('/', { replace: true })
-    window.location.reload()
+    setIsConfirm('')
+    navigate('/login', { replace: true })
+    // window.location.reload()
     await userServices.logoutUser()
   }
 

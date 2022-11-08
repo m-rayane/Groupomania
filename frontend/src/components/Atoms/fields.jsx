@@ -5,6 +5,7 @@ export const FormField = ({
   onChange,
   type,
   children,
+  style,
 }) => {
   return (
     <div className={className}>
@@ -15,6 +16,7 @@ export const FormField = ({
         name={name}
         defaultValue={defaultValue}
         onChange={onChange}
+        style={style}
       />
     </div>
   )

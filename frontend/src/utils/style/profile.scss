@@ -32,11 +32,11 @@
         width: 58.8%;
         aspect-ratio: 1/1.47;
         object-fit: cover;
-        z-index: 6;
+        z-index: 5;
       }
       &__border {
         width: 70%;
-        z-index: 5;
+        z-index: 6;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
       }
       &__choice {

@@ -25,14 +25,12 @@ export default function CreatePost() {
       formData.append('posterId', userIdData._id)
       formData.append('message', e.target['postMessage'].value)
       formData.append('image', postImage)
-      console.log(...formData)
-      console.log(e.target['postMessage'].value)
-
       try {
         await postServices.postPost(formData)
         e.target['postMessage'].value = ''
         setPostImage(null)
         getPosts()
+        navigate('/', { replace: true })
       } catch (error) {
         console.log(error)
       }

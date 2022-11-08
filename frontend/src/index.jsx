@@ -27,7 +27,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/createPost" element={<CreatePost />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="*" element={<PageNotFound />}></Route>
+                <Route path="*" element={<PageNotFound />} />
               </Routes>
             </main>
           </PostProvider>
