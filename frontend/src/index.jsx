@@ -4,7 +4,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 
-import Header from './components/Header/header'
+import Header from './components/Organisms/header'
 import Login from './pages/login'
 import CreatePost from './pages/createPost'
 import PostOffice from './pages/postOffice'

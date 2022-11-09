@@ -8,6 +8,8 @@ const User = require('../models/User')
 
 const defaultPicture = 'http://localhost:4200/images/default/default-avatar.png'
 
+const tokenExpiresIn = 24 * 60 * 60 * 1000
+
 // to signup a new user
 exports.signup = (req, res, next) => {
   bcrypt
@@ -50,12 +52,12 @@ exports.login = (req, res, next) => {
           const createdToken = jwt.sign(
             { userId: user._id },
             process.env.ACCESS_SECRET_TOKEN,
-            { expiresIn: '24h' }
+            { expiresIn: tokenExpiresIn }
           )
+          res.cookie('jwt', createdToken, { httpOnly: true, tokenExpiresIn })
           res.status(200).json({
             userId: user._id,
             isAdmin: user.isAdmin,
-            token: createdToken,
             tokenExpiration: jwt.verify(
               createdToken,
               process.env.ACCESS_SECRET_TOKEN
@@ -78,6 +80,7 @@ exports.getUserData = async (req, res, next) => {
 }
 
 exports.logout = (req, res, next) => {
+  res.clearCookie('jwt')
   console.log('You are deconnected')
 }
 

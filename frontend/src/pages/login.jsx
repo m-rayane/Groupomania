@@ -1,24 +1,23 @@
-// molecules
-import { SignInForm } from '../components/Molecules/signInForm'
-import { SignUpForm } from '../components/Molecules/signUpForm'
-
-import '../utils/style/auth.scss'
-
+// Libraries
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+// CSS
+import '../utils/style/auth.scss'
+import { regexName, regexEmail, regexPassword } from '../utils/regex/regex'
+
+// Components
+import { SignInForm } from '../components/Organisms/signInForm'
+import { SignUpForm } from '../components/Organisms/signUpForm'
+
+// Services
 import { PostContext } from '../utils/contexts/postContext'
 import UserService from '../api/Services/UserServices'
+
 const userServices = new UserService()
 
-const regexName =
-  /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]*$/i
-const regexEmail = /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/i
-const regexPassword =
-  /^(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()]*$/i
-
 export default function Login() {
-  const { usersData, getUserId } = useContext(PostContext)
+  const { usersData } = useContext(PostContext)
   const navigate = useNavigate()
 
   const [error, setError] = useState('')
@@ -87,7 +86,6 @@ export default function Login() {
             password: password,
           }
           await userServices.logInUser(userData).then((response) => {
-            localStorage.setItem('token', response.data.token)
             localStorage.setItem('userId', response.data.userId)
             localStorage.setItem('isAdmin', response.data.isAdmin)
             localStorage.setItem(
@@ -113,11 +111,11 @@ export default function Login() {
         password: passwordValue,
       }
       await userServices.logInUser(userData).then((response) => {
-        localStorage.setItem('token', response.data.token)
         localStorage.setItem('userId', response.data.userId)
         localStorage.setItem('isAdmin', response.data.isAdmin)
         localStorage.setItem('expirationDate', response.data.tokenExpiration)
       })
+
       navigate('/', { replace: true })
     } catch (err) {
       setErrorBtn('errorBtn')

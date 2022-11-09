@@ -4,8 +4,9 @@ dotenv.config()
 
 // decode token
 module.exports = (req, res, next) => {
+  console.log(req.cookies.jwt)
   try {
-    const token = req.headers.authorization
+    const token = req.cookies.jwt
     const decodedToken = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN)
     const userId = decodedToken.userId
     req.auth = {
@@ -13,7 +14,7 @@ module.exports = (req, res, next) => {
     }
     next()
   } catch (error) {
-    console.log(req.headers.authorization)
+    console.log('auth error')
     res.status(403).json({ error })
   }
 }

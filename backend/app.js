@@ -25,6 +25,8 @@ const userRoutes = require('./routes/user')
 
 const app = express()
 
+const { checkUser, requireAuth } = require('./middleware/auth')
+
 // 'mongodb://localhost:27017/groupomania?authMechanism=DEFAULT'   LOCAL MONGODB COMPASS
 
 // connect to mongodb

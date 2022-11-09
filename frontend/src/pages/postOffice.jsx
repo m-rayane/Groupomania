@@ -201,20 +201,16 @@ export default function PostOffice() {
                               />
                             </div>
                           )}
-                          <div className="postCard__front__header__data">
-                            <div className="postCard__front__header__data__stamp">
+                          <div className="postCard__front__header__data"></div>
+                          <div className="postCard__front__header__user">
+                            <div className="postCard__front__header__user__stamp">
                               <StampedSvg />
                               <Moment
                                 format="DD/MM/YY"
-                                className="postCard__front__header__data__stamp__date"
+                                className="postCard__front__header__user__stamp__date"
                               >
                                 {post.createdAt}
                               </Moment>
-                            </div>
-                          </div>
-                          <div className="postCard__front__header__user">
-                            <div className="postCard__front__header__user__name">
-                              {poster._firstName} {poster._lastName}
                             </div>
                             <div className="postCard__front__header__user__picture">
                               <img
@@ -227,6 +223,9 @@ export default function PostOffice() {
                                 className="postCard__front__header__user__picture__image"
                                 alt=""
                               />
+                            </div>
+                            <div className="postCard__front__header__user__name">
+                              {poster._firstName} {poster._lastName}
                             </div>
                           </div>
                         </div>
@@ -263,11 +262,6 @@ export default function PostOffice() {
                             />
                             {post._comments.length}
                           </div>
-                          <div className="postCard__front__footer__date">
-                            <Moment format="DD/MM/YYYY à HH:mm" className="">
-                              {post.createdAt}
-                            </Moment>
-                          </div>
                           {isUserPost && (
                             <>
                               {isDeletePost && targetPost === post._id && (
@@ -295,6 +289,11 @@ export default function PostOffice() {
                               </div>
                             </>
                           )}
+                          <div className="postCard__front__footer__date">
+                            <Moment format="DD/MM/YYYY à HH:mm" className="">
+                              {post.createdAt}
+                            </Moment>
+                          </div>
                         </div>
                         <div className="postCard__front__comment">
                           {isComDisplay && targetPost === post._id && (

@@ -34,10 +34,32 @@ button {
   }
 }
 
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg) rotateX(0deg) translateX(0px) rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotateY(360deg) rotateX(180deg) translateX(-50px) rotate(-20deg)
+      scale(0.2);
+  }
+}
+
+@keyframes turnCard {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+.turnCard {
+  animation: turnCard 0.3s ease-in-out forwards;
+}
+
 .postCard,
 .postForm {
   list-style: none;
-  min-width: 300px;
   & svg {
     width: 20px;
     height: 20px;
@@ -50,9 +72,9 @@ button {
     font-family: 'Dancing Script', cursive;
     background-image: url('../../../public/images/old-postcard-800x533.jpg');
     background-size: auto;
-    margin: 20px 0;
-    padding: 2%;
-    width: 95vw;
+    margin: 25px 0;
+    padding: 4%;
+    width: 90vw;
     aspect-ratio: 1.5 / 1;
     box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.2);
     & > form {
@@ -64,7 +86,7 @@ button {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      height: 35%;
+      height: 30%;
       position: relative;
       &__postImage {
         position: relative;
@@ -91,39 +113,36 @@ button {
       }
       &__data {
         position: relative;
-      }
-      &__user {
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-start;
-        width: 50%;
-        position: relative;
+        width: 40%;
         &__stamp {
-          position: absolute;
-          width: 104px;
-          height: 56px;
-          top: 20%;
-          right: 10%;
+          position: relative;
+          width: 260px;
+          height: 140px;
+          left: 60%;
           z-index: 3;
-          @media (min-width: 480px) {
-            scale: 1.5;
-            top: 30%;
-            right: 15%;
+          @media (max-width: 768px) {
+            scale: 0.8;
+            left: 55%;
           }
-          @media (min-width: 768px) {
-            scale: 2;
-            top: 40%;
-            right: 25%;
+          @media (max-width: 600px) {
+            scale: 0.6;
+            top: -10%;
+            left: 45%;
           }
-          &__date {
-            top: 41%;
-            left: 12%;
-            font-size: 7px;
-            font-weight: bold;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold',
-              sans-serif;
-            color: rgba($colour-primary, 0.5);
-            rotate: (-20deg);
+          @media (max-width: 480px) {
+            scale: 0.5;
+            top: -30%;
+            left: 25%;
+          }
+          @media (max-width: 400px) {
+            scale: 0.4;
+            top: -50%;
+            left: 0%;
+          }
+          @media (max-width: 320px) {
+            scale: 0.3;
+            top: -80%;
+            left: -10%;
           }
           & * {
             position: absolute;
@@ -144,21 +163,32 @@ button {
               stroke-width: 5;
             }
           }
-        }
-        &__name {
-          font-size: $font-size-small;
-          position: absolute;
-          bottom: 0;
-          right: 5%;
-          @media (min-width: 768px) {
-            font-size: $font-size-small-fixed;
+          &__date {
+            top: 42%;
+            left: 12%;
+            font-weight: bold;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold',
+              sans-serif;
+            color: rgba($colour-primary, 0.5);
+            rotate: (-20deg);
           }
         }
+      }
+      &__user {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 25%;
+        position: relative;
+        &__name {
+          font-size: 1em;
+        }
         &__picture {
-          width: 50%;
-          position: absolute;
-          top: 40%;
-          right: -10%;
+          width: 100%;
+          position: relative;
+          top: 35%;
+          right: -20%;
           rotate: 3deg;
           & > * {
             position: absolute;
@@ -184,13 +214,10 @@ button {
       display: flex;
       align-items: center;
       width: 100%;
-      min-height: 40%;
+      min-height: 50%;
       padding: 10px 0;
-      font-size: $font-size-large;
+      font-size: calc(16px + 0.5vw);
       flex: 1 1 auto;
-      @media (min-width: 768px) {
-        font-size: $font-size-large-fixed;
-      }
       &__message {
         width: 100%;
       }
@@ -206,26 +233,30 @@ button {
       position: relative;
       display: flex;
       justify-content: space-between;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: center;
       height: 10%;
       & svg {
         cursor: pointer;
-        width: 80%;
-        @media (min-width: 768px) {
-          width: 90%;
-        }
       }
-      & * {
+      &__modify {
         display: flex;
-        align-items: flex-start;
-        gap: 1%;
-        @media (min-width: 768px) {
-          gap: 2%;
+        justify-content: space-around;
+        width: 75px;
+        & svg {
+          fill: $colour-tertiary;
+        }
+        & svg:hover {
+          fill: $colour-primary;
+        }
+        &__confirmBox {
+          @include confirmBox;
         }
       }
       &__like {
-        width: 15%;
+        display: flex;
+        justify-content: space-around;
+        width: 50px;
         &--isLike {
           & svg {
             fill: $colour-primary;
@@ -250,7 +281,9 @@ button {
         }
       }
       &__commentBtn {
-        width: 15%;
+        display: flex;
+        justify-content: space-around;
+        width: 50px;
         & svg {
           fill: $colour-tertiary;
           stroke: $colour-tertiary;
@@ -262,39 +295,13 @@ button {
           stroke-width: 3;
         }
       }
-      &__date {
-        justify-content: flex-end;
-        align-items: center;
-        width: 40%;
-        font-size: $font-size-xsmall;
-        @media (min-width: 768px) {
-          font-size: $font-size-xsmall-fixed;
-        }
-      }
-      &__modify {
-        justify-content: center;
-        width: 20%;
-        gap: 20%;
-        & svg {
-          fill: $colour-tertiary;
-        }
-        & svg:hover {
-          fill: $colour-primary;
-        }
-        &__confirmBox {
-          @include confirmBox;
-        }
-      }
       &__error {
         position: absolute;
         bottom: -75px;
         width: 100%;
         color: $colour-primary;
         text-align: center;
-        font-size: $font-size-large;
-        @media (min-width: 768px) {
-          font-size: $font-size-large-fixed;
-        }
+        font-size: 1.5em;
       }
       &__createPostBtn {
         display: flex;
@@ -328,7 +335,7 @@ button {
       display: flex;
       flex-direction: column;
       width: 100%;
-
+      max-width: 750px;
       background-image: url('../../../public/images/old-postcard-800x533.jpg');
       background-size: auto;
       & svg {
@@ -349,16 +356,13 @@ button {
           align-items: center;
           position: relative;
           &__picture {
-            height: 25px;
+            height: 30px;
             aspect-ratio: 1/1.47;
             rotate: -2deg;
-            @media (min-width: 768px) {
-              height: 30px;
-            }
             & > * {
               position: absolute;
-              top: 100%;
-              left: 10%;
+              top: 80%;
+              left: 0;
               transform: translate(-50%, -50%);
             }
             // ratio 42% / 50%
@@ -366,43 +370,39 @@ button {
               height: 135%;
               aspect-ratio: 1/1.5;
               object-fit: cover;
-              z-index: 6;
+              z-index: 5;
             }
             &__border {
               height: 150%;
-              z-index: 5;
+              z-index: 6;
             }
           }
           &__name {
             padding-left: 10px;
-            font-size: $font-size-small;
-            @media (min-width: 768px) {
-              font-size: $font-size-small-fixed;
-            }
           }
         }
 
         &__form {
           position: relative;
           display: flex;
-          justify-content: space-around;
           margin: 5px;
           &__textField {
             width: 90%;
-            padding: 0 25px 0 15px;
-            @media (min-width: 768px) {
-              padding: 0 0 0 20px;
-            }
+            padding: 0 10px 0 20px;
           }
           &__btn {
-            width: 7%;
+            width: 10%;
             display: flex;
-            justify-content: flex-end;
-            gap: 5px;
+            justify-content: space-around;
             & svg {
               fill: $colour-tertiary;
-              scale: 0.9;
+              margin-right: 5px;
             }
+            // & svg:hover {
+            //   fill: $colour-primary;
+            //   stroke: $colour-primary;
+            //   stroke-width: 3;
+            // }
             &__cancel {
               scale: 0.8;
               & svg:hover {
@@ -424,25 +424,23 @@ button {
       }
 
       &__content {
-        margin: 5px 0;
+        margin: 5px;
         border: 2px dotted $colour-tertiary;
         background-color: rgba($colour-secondary, 0.5);
+
         &__commenter {
           display: flex;
           align-items: center;
           position: relative;
           height: 100%;
           &__picture {
-            height: 25px;
+            height: 30px;
             aspect-ratio: 1/1.47;
             rotate: -2deg;
-            @media (min-width: 768px) {
-              height: 30px;
-            }
             & > * {
               position: absolute;
-              top: 100%;
-              left: 30%;
+              top: 80%;
+              left: 0;
               transform: translate(-50%, -50%);
             }
             // ratio 42% / 50%
@@ -459,18 +457,11 @@ button {
           }
           &__name {
             padding-left: 10px;
-            font-size: $font-size-small;
-            @media (min-width: 768px) {
-              font-size: $font-size-small-fixed;
-            }
           }
         }
         &__text {
           padding: 5px 5px 5px 30px;
-          font-size: $font-size-medium;
-          @media (min-width: 768px) {
-            font-size: $font-size-medium-fixed;
-          }
+          font-size: calc(16px + 0.5vw);
         }
         &__modify {
           position: absolute;
@@ -536,37 +527,15 @@ button {
 
 .singleComment {
   position: relative;
-  // animation: open 0.2s ease-out forwards;
+  animation: open 0.2s ease-out forwards;
+  transform: rotateX(90deg);
 }
 
-// @keyframes open {
-//   from {
-//     transform: rotateX(90deg);
-//   }
-//   to {
-//     transform: rotateX(0deg);
-//   }
-// }
-
-// @keyframes rotate {
-//   from {
-//     transform: rotateY(0deg) rotateX(0deg) translateX(0px) rotate(0deg) scale(1);
-//   }
-//   to {
-//     transform: rotateY(360deg) rotateX(180deg) translateX(-50px) rotate(-20deg)
-//       scale(0.2);
-//   }
-// }
-
-// @keyframes turnCard {
-//   from {
-//     transform: rotateY(0deg);
-//   }
-//   to {
-//     transform: rotateY(180deg);
-//   }
-// }
-
-// .turnCard {
-//   animation: turnCard 0.3s ease-in-out forwards;
-// }
+@keyframes open {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}

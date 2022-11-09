@@ -12,10 +12,8 @@
 }
 
 .auth {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,18 +30,29 @@
       aspect-ratio: 4/1;
       border: 1px solid rgba($colour-tertiary, 0.75);
       background-color: rgba($colour-tertiary, 0.3);
+      font-size: $font-size-xxsmall;
       font-weight: bold;
       color: rgba($colour-tertiary, 0.5);
-      transition: all 0.2s ease-in-out;
+      transition: color 0.1s ease-in-out;
+      transition: box-shadow 0.1s ease-in-out;
       box-shadow: 0px -5px 25px -10px $colour-tertiary inset;
+      @media (min-width: 768px) {
+        font-size: $font-size-xxsmall-fixed;
+      }
     }
     &__btn:hover {
       color: rgba($colour-tertiary, 0.8);
       background-color: rgba($colour-tertiary, 0.15);
-      font-size: 1em;
+      font-size: $font-size-xsmall;
+      @media (min-width: 768px) {
+        font-size: $font-size-xsmall-fixed;
+      }
     }
     & > .activeBtn {
-      font-size: 1.1em;
+      font-size: $font-size-small;
+      @media (min-width: 768px) {
+        font-size: $font-size-small-fixed;
+      }
       border-bottom: 0;
       background-color: rgba($colour-tertiary, 0);
       color: $colour-tertiary;
@@ -62,13 +71,18 @@
       position: absolute;
       top: 94%;
       background-color: $colour-secondary;
+      font-size: $font-size-small;
       font-weight: bold;
       color: $colour-tertiary;
       border: 2px solid rgba($colour-tertiary, 0.5);
       box-shadow: $colour-tertiary 0px 15px 30px;
       width: 25%;
       aspect-ratio: 3/1;
-      transition: all 0.2s ease-in-out;
+      transition: color 0.2s ease-in-out;
+      transition: box-shadow 0.4s ease-in-out;
+      @media (min-width: 768px) {
+        font-size: $font-size-small-fixed;
+      }
     }
     & button:hover {
       color: rgb(0, 200, 0);
@@ -82,7 +96,11 @@
     &__signUp {
       width: 100%;
       height: 100%;
-      padding-bottom: 7%;
+      padding-bottom: 3%;
+      font-size: $font-size-small;
+      @media (min-width: 768px) {
+        font-size: $font-size-small-fixed;
+      }
       &__form {
         display: flex;
         flex-direction: column;
@@ -98,8 +116,11 @@
           &__field {
             display: flex;
             flex-direction: column;
-            padding: 2% 5%;
+            padding: 1% 2%;
             width: 50%;
+            @media (min-width: 480px) {
+              padding: 1% 4%;
+            }
             & > label {
               padding: 5px;
               text-align: center;
@@ -108,7 +129,6 @@
               border: 1px solid rgba($colour-tertiary, 0.75);
               aspect-ratio: 7/1;
               box-shadow: $colour-tertiary 0px 1px 3px;
-              padding: 0 10px;
             }
           }
           &__field:nth-child(3) {
@@ -132,7 +152,10 @@
       width: 100%;
       text-align: center;
       padding: 10px;
-      // animation: 1s ease-out 1s forwards disapprearingMsg;
+      font-size: $font-size-medium;
+      @media (min-width: 768px) {
+        font-size: $font-size-medium-fixed;
+      }
       &__error {
         color: $colour-primary;
       }
@@ -140,14 +163,5 @@
         color: greenyellow;
       }
     }
-  }
-}
-
-@keyframes disapprearingMsg {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
   }
 }

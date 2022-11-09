@@ -12,7 +12,6 @@ export const PostProvider = ({ children }) => {
   const [usersData, setUsersData] = useState([])
   const [userIdData, setUserIdData] = useState([])
   const [postsData, setPostsData] = useState([])
-  const tokenLS = localStorage.getItem('token')
   const userId = localStorage.getItem('userId')
   const expirationDate = localStorage.getItem('expirationDate')
   const [isLoading, setIsLoading] = useState(true)
@@ -37,7 +36,6 @@ export const PostProvider = ({ children }) => {
       }
       getUserId()
     } else {
-      console.log('User not connected')
       localStorage.clear()
       navigate('/login', { replace: true })
     }
@@ -99,7 +97,7 @@ export const PostProvider = ({ children }) => {
         usersData,
         userIdData,
         postsData,
-        tokenLS,
+        userId,
         isLoading,
         getPosts,
         getUserId,

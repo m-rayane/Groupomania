@@ -1,24 +1,27 @@
 import '../../utils/style/header.scss'
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 import UserService from '../../api/Services/UserServices'
 
 import { PostContext } from '../../utils/contexts/postContext'
 
-import Logout from '../Auth/logout'
+import Logout from './logout'
 
 import { LogoSvg, PostOfficeSvg, CreatePostSvg, ProfileSvg } from '../Atoms/svg'
+import { element } from 'prop-types'
 
 export default function Header() {
-  const { tokenLS } = useContext(PostContext)
+  const { userId } = useContext(PostContext)
 
   const userServices = new UserService()
 
   const navigate = useNavigate()
 
   const [isConfirm, setIsConfirm] = useState(false)
+  const [scrollUp, setScrollUp] = useState('')
+  const [scrollDown, setScrollDown] = useState('')
 
   const handleLogoutConfirm = async (e) => {
     e.preventDefault()
@@ -35,16 +38,36 @@ export default function Header() {
     navigate('/', { replace: true })
   }
 
+  useEffect(() => {
+    const handleScroll = (event) => {
+      if (window.scrollY > 70) {
+        setScrollUp('scrollUp')
+        setScrollDown('')
+      } else {
+        setScrollUp('')
+        setScrollDown('scrollDown')
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [scrollUp])
+
+  const handleScrollTop = () => {
+    window.scrollTo(0, 0)
+  }
+
   return (
     <>
-      <header className="header">
+      <header className={'header ' + scrollUp + scrollDown}>
         <Link to="/">
-          <div className="header__logo">
+          <div className="header__logo" onClick={handleScrollTop}>
             <LogoSvg alt="" />
           </div>
         </Link>
         <div className="header__nav">
-          {!tokenLS ? (
+          {!userId ? (
             <></>
           ) : (
             <>

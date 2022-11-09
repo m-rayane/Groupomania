@@ -1,12 +1,10 @@
 // libraries
 import axios from 'axios'
 
-const tokenLS = localStorage.getItem('token')
-
 // axios configuration
 axios.defaults.baseURL = 'http://localhost:4200/api'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.headers.common['Authorization'] = tokenLS
+axios.defaults.withCredentials = true
 
 // axios request
 export const getRequest = async (url) => {

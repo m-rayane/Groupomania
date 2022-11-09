@@ -3,25 +3,25 @@
 .header {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 1000px;
-  padding: 10px;
+  padding: 10px 10px 0 10px;
   background-color: $colour-tertiary;
-  @media (max-width: 600px) {
-    flex-direction: column;
-    padding: 10px 0 0 0;
+  @media (min-width: 480px) {
+    flex-direction: row;
   }
   &__logo {
+    padding-left: 10%;
     height: 50px;
   }
   &__nav {
     display: flex;
-    justify-content: space-between;
-    width: 200px;
-    @media (max-width: 600px) {
-      justify-content: space-evenly;
-      width: 100%;
+    justify-content: space-evenly;
+    width: 100%;
+    @media (min-width: 480px) {
+      width: 40%;
     }
     & svg {
       fill: rgba($colour-primary, 0.8);
@@ -95,11 +95,59 @@
   width: 200px;
 }
 
+.scrollUp {
+  position: relative;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  animation: moveUp 0.4s ease-in-out;
+  .header__nav {
+    position: absolute;
+    justify-content: space-evenly;
+    right: 0;
+    width: 80%;
+    @media (min-width: 480px) {
+      width: 40%;
+    }
+  }
+  & .logoSvg {
+    &__title {
+      display: none;
+      @media (min-width: 480px) {
+        display: block;
+      }
+    }
+  }
+}
+
+.scrollDown {
+  animation: moveDown 0.4s ease-in-out;
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(5rem);
+  }
+  to {
+    transform: translateY(0rem);
+  }
+}
+
+@keyframes moveDown {
+  from {
+    transform: translateY(-5rem);
+  }
+  to {
+    transform: translateY(0rem);
+  }
+}
+
 .logoSvg {
-  &__st0 {
+  &__title {
     fill: $colour-primary;
   }
-  &__st1 {
+  &__logo {
     fill: $colour-secondary;
   }
 }
