@@ -128,6 +128,11 @@
               border: 1px solid rgba($colour-tertiary, 0.75);
               aspect-ratio: 7/1;
               box-shadow: $colour-tertiary 0px 1px 3px;
+              padding: 0 3%;
+              font-size: $font-size-xsmall;
+              @media (min-width: 768px) {
+                font-size: $font-size-xxsmall-fixed;
+              }
             }
           }
           &__field:nth-child(3) {
