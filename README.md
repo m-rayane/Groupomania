@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Groupomania
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##### _Social-network of the Groupomania company_
 
-## Available Scripts
+## **Installation** :
 
-In the project directory, you can run:
+**Back-end**
 
-### `npm start`
+- Open a shell in Groupomania folder
+- Jump in backend folder with `cd backend`
+- Download backend required dependencies with `npm install`
+- Start the API with `nodemon` command
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Front-end**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Open another shell in Groupomania folder
+- Jump in frontend folder with `cd frontend`
+- Download frontend dependencies with `npm install`
+- Start the application with `npm start`
+- If your browser didn't start by itself, open it, and search for `http://localhost:3000`
 
-### `npm test`
+## List of dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Back-end**
 
-### `npm run build`
+```
+    bcrypt: v5.0.1,
+    body-parser: v1.20.0,
+    cookie-parser: v1.4.6,
+    cors: v2.8.5,
+    dotenv: v16.0.1,
+    express: v4.18.1,
+    express-mongo-sanitize: v2.2.0,
+    helmet: v5.1.0,
+    jsonwebtoken: v8.5.1,
+    mongoose: v6.4.4,
+    mongoose-unique-validator: v3.1.0,
+    multer: v1.4.5-lts.1
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+dev:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    nodemon: v2.0.19
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
 
-### `npm run eject`
+**Front-end**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+    @testing-library/jest-dom: v5.16.5,
+    @testing-library/react: v13.4.0,
+    @testing-library/user-event: v13.5.0,
+    axios: v0.27.2,
+    node-sass: v7.0.3,
+    prop-types: v15.8.1,
+    react: v18.2.0,
+    react-dom: v18.2.0,
+    react-moment: v1.1.2,
+    react-router-dom: v6.4.1,
+    react-scripts: 5.0.1,
+    styled-components: v5.3.6,
+    web-vitals: v2.1.4
+```
