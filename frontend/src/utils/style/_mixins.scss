@@ -1,8 +1,8 @@
 @mixin confirmBox {
   z-index: 10;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50vh;
+  left: 50vw;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -34,5 +34,29 @@
   & #confirmSvg:hover {
     fill: rgba(green, 0.8);
     scale: 1.2;
+  }
+}
+
+@mixin layoutKF {
+  animation: layout 0.3s ease-in-out;
+  @keyframes layout {
+    from {
+      background-color: rgba($colour-tertiary, 0);
+    }
+    to {
+      background-color: rgba($colour-tertiary, 0.8);
+    }
+  }
+}
+
+@mixin confirmBoxKF {
+  animation: 0.2s confirmBox 0.2s ease-out forwards;
+  @keyframes confirmBox {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

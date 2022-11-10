@@ -1,0 +1,38 @@
+@import './variables';
+
+.pageNotFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__404 {
+    font-size: calc(16px + 20vw);
+    @media (min-width: 768px) {
+      font-size: 175px;
+    }
+  }
+  &__title {
+    font-size: calc(16px + 5vw);
+    @media (min-width: 768px) {
+      font-size: 55px;
+    }
+  }
+  &__link {
+    font-size: calc(16px + 1vw);
+    text-decoration: none;
+    padding: 5%;
+    text-align: center;
+    color: rgba($colour-primary, 0.77);
+    @media (min-width: 768px) {
+      font-size: 25px;
+    }
+    & span {
+      font-size: calc(16px + 2vw);
+      @media (min-width: 768px) {
+        font-size: 32px;
+      }
+    }
+  }
+  &__link:hover {
+    color: $colour-primary;
+  }
+}

@@ -18,6 +18,7 @@ export const PostProvider = ({ children }) => {
 
   const navigate = useNavigate()
 
+  // to disconnect if token expired
   useEffect(() => {
     if (expirationDate && expirationDate * 1000 < Date.now()) {
       localStorage.clear()
@@ -26,6 +27,7 @@ export const PostProvider = ({ children }) => {
     }
   }, [expirationDate, navigate])
 
+  // to get users and posts data
   useEffect(() => {
     if (userId) {
       const getUserId = async () => {
@@ -65,7 +67,7 @@ export const PostProvider = ({ children }) => {
     }
   }, [userId])
 
-  // function for re-rendering on every new api call
+  // functions for re-rendering on every new api call
   const getPosts = async () => {
     const reRender = async () => {
       const reqRes = await postServices.getPost()
@@ -74,7 +76,6 @@ export const PostProvider = ({ children }) => {
     reRender()
   }
 
-  // function for dispatching DOM rendering on users api call
   const getUserId = async () => {
     const reRender = async () => {
       const reqRes = await userServices.getUserId()
@@ -82,7 +83,7 @@ export const PostProvider = ({ children }) => {
     }
     reRender()
   }
-  // function for dispatching DOM rendering on user api call
+
   const getUsers = async () => {
     const reRender = async () => {
       const reqRes = await userServices.getUser()

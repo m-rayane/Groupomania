@@ -1,22 +1,17 @@
-// Libraries
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-// CSS
 import '../utils/style/auth.scss'
 import { regexName, regexEmail, regexPassword } from '../utils/regex/regex'
 
-// Components
 import { SignInForm } from '../components/Organisms/signInForm'
 import { SignUpForm } from '../components/Organisms/signUpForm'
 
-// Services
 import { PostContext } from '../utils/contexts/postContext'
 import UserService from '../api/Services/UserServices'
 
-const userServices = new UserService()
-
 export default function Login() {
+  const userServices = new UserService()
   const { usersData } = useContext(PostContext)
   const navigate = useNavigate()
 
@@ -26,7 +21,7 @@ export default function Login() {
   const [activeSignUpBtn, setActiveSignUpBtn] = useState('')
   const [errorBtn, setErrorBtn] = useState('')
 
-  //Signup const and functions
+  // to submit signup
   const handleSignUpSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -99,8 +94,7 @@ export default function Login() {
     }
   }
 
-  //Login consts and functions
-
+  //to submit login
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
     const emailValue = e.target['signInEmail'].value

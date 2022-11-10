@@ -1,12 +1,17 @@
+import '../utils/style/pageNotFound.scss'
+
 import { Link } from 'react-router-dom'
 
 export default function PageNotFound() {
   return (
     <div className="pageNotFound">
-        <img src="" alt="" className="pageNotFound__image" />
-        Page Not Found
+      <h1 className="pageNotFound__404">404</h1>
+      <h2 className="pageNotFound__title">Page Not Found !</h2>
+
       <Link to="/" className="pageNotFound__link">
-        Back to home page
+        Back to the
+        <br />
+        <span>Post Office</span>
       </Link>
     </div>
   )

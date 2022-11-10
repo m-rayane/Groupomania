@@ -4,24 +4,25 @@ import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 import UserService from '../../api/Services/UserServices'
-
 import { PostContext } from '../../utils/contexts/postContext'
 
 import Logout from './logout'
-
 import { LogoSvg, PostOfficeSvg, CreatePostSvg, ProfileSvg } from '../Atoms/svg'
-import { element } from 'prop-types'
 
 export default function Header() {
   const { userId } = useContext(PostContext)
-
   const userServices = new UserService()
-
   const navigate = useNavigate()
 
   const [isConfirm, setIsConfirm] = useState(false)
   const [scrollUp, setScrollUp] = useState('')
   const [scrollDown, setScrollDown] = useState('')
+
+  const handleLogoutCancel = (e) => {
+    e.preventDefault()
+    setIsConfirm(false)
+    navigate('/', { replace: true })
+  }
 
   const handleLogoutConfirm = async (e) => {
     e.preventDefault()
@@ -32,12 +33,7 @@ export default function Header() {
     await userServices.logoutUser()
   }
 
-  const handleLogoutCancel = (e) => {
-    e.preventDefault()
-    setIsConfirm(false)
-    navigate('/', { replace: true })
-  }
-
+  // to set class scrollUp and scrollDown to header section
   useEffect(() => {
     const handleScroll = (event) => {
       if (window.scrollY > 70) {
@@ -54,6 +50,7 @@ export default function Header() {
     }
   }, [scrollUp])
 
+  // to scroll to top
   const handleScrollTop = () => {
     window.scrollTo(0, 0)
   }

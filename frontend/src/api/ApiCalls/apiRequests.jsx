@@ -1,4 +1,3 @@
-// libraries
 import axios from 'axios'
 
 // axios configuration

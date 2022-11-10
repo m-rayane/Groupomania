@@ -21,7 +21,6 @@ exports.signup = (req, res, next) => {
         email: req.body.email,
         password: hash,
       })
-      console.log(req.body)
       user
         .save()
         .then(() =>
@@ -69,24 +68,27 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }))
 }
 
+// to get all users
 exports.getAllUsers = async (req, res, next) => {
   const users = await User.find().select('-password')
   res.status(200).json(users)
 }
 
+// to get one user
 exports.getUserData = async (req, res, next) => {
   const user = await User.findOne({ _id: req.params.id }).select('-password')
   res.status(200).json(user)
+  res.status(200)
 }
 
+//to logout
 exports.logout = (req, res, next) => {
   res.clearCookie('jwt')
   console.log('You are deconnected')
 }
 
+// to edit an user
 exports.editUser = (req, res, next) => {
-  console.log(req.body.userId)
-  console.log(req.auth.userId)
   if (req.body.isAdmin === 1 || req.body.userId === req.auth.userId) {
     const userObject = req.file
       ? {
@@ -113,6 +115,8 @@ exports.editUser = (req, res, next) => {
     res.status(401).json({ message: 'Not authorized' })
   }
 }
+
+// not active yet because we must implement to delete all posts and comments user
 
 // exports.deleteUser = (req, res, next) => {
 //   User.findOne({ _id: req.params.id }).then((user) => {

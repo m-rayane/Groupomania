@@ -1,4 +1,4 @@
-@import '../src/utils/style/variables';
+@import './utils/style/variables';
 
 * {
   box-sizing: border-box;
@@ -8,6 +8,7 @@
 
 body {
   background-color: $colour-tertiary;
+  font-family: 'Dancing Script', cursive;
 }
 
 textarea {

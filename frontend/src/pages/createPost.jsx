@@ -1,17 +1,19 @@
 import '../utils/style/postOffice.scss'
+
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormField, TextField } from '../components/Atoms/fields'
 import { CancelButton, SendButton } from '../components/Atoms/buttons'
 import FormData from 'form-data'
-import PostServices from '../api/Services/PostServices'
 
+import PostServices from '../api/Services/PostServices'
 import { PostContext } from '../utils/contexts/postContext'
 
 export default function CreatePost() {
   const { userIdData, getPosts } = useContext(PostContext)
   const postServices = new PostServices()
   const navigate = useNavigate()
+
   const [postImage, setPostImage] = useState(null)
   const [error, setError] = useState('')
 
@@ -37,6 +39,7 @@ export default function CreatePost() {
     }
   }
 
+  // to set the image on state
   const handleImage = (e) => {
     setPostImage(e.target.files[0])
   }
@@ -52,14 +55,6 @@ export default function CreatePost() {
               name="postImage"
               onChange={handleImage}
             ></FormField>
-          </div>
-          <div className="postForm__front__header__user">
-            <div className="postForm__front__header__user__name">
-              {/* Send by {poster.firstName} {poster.lastName} */}
-            </div>
-            <div className="postForm__front__header__user__picture">
-              {/* <img src={poster.profilePicture} alt="" /> */}
-            </div>
           </div>
         </div>
         <div className="postForm__front__content">

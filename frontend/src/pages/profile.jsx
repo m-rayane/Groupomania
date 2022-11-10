@@ -2,23 +2,21 @@ import '../utils/style/profile.scss'
 
 import React, { useContext, useState } from 'react'
 
-import { PostContext } from '../utils/contexts/postContext'
-
-import UserService from '../api/Services/UserServices'
-
 import { ModifyButtons } from '../components/Molecules/modifyButtons'
 import { ConfirmButtons } from '../components/Molecules/confirmButtons'
 import { FormField } from '../components/Atoms/fields'
-
 import stamp from '../utils/images/stamp-rectangle-white.png'
-const userServices = new UserService()
+
+import { PostContext } from '../utils/contexts/postContext'
+import UserService from '../api/Services/UserServices'
 
 const regexName =
   /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s]*$/i
 const regexEmail = /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/i
 
 export default function Profil() {
-  const { userIdData, getUserId } = useContext(PostContext)
+  const { userIdData } = useContext(PostContext)
+  const userServices = new UserService()
 
   const [isEdited, setIsEdited] = useState(false)
   const [profilePicture, setProfilePicture] = useState(null)
@@ -61,9 +59,6 @@ export default function Profil() {
         userData.append('isAdmin', userIdData.isAdmin)
         userData.append('userId', userIdData._id)
         await userServices.editUser(userIdData._id, userData)
-        // e.target['newFirstName'].value = ''
-        // e.target['newLastName'].value = ''
-        // e.target['newEmail'].value = ''
         window.location.reload(false)
         setIsEdited(false)
       } catch (err) {
@@ -175,6 +170,9 @@ export default function Profil() {
                 className="profile__content__modify"
                 cancelHandleClick={handleCancel}
               />
+            </div>
+            <div className="auth__content__message">
+              <div className="auth__content__message__error">{error}</div>
             </div>
           </div>
         </form>

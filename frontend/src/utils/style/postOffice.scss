@@ -47,7 +47,6 @@ button {
     flex-direction: column;
     position: relative;
     max-width: 800px;
-    font-family: 'Dancing Script', cursive;
     background-image: url('../../../public/images/old-postcard-800x533.jpg');
     background-size: auto;
     margin: 20px 0;
@@ -196,9 +195,17 @@ button {
       }
       & textarea {
         width: 100%;
-        height: 150px;
+        height: 90px;
         padding: 5px 10px;
         word-wrap: break-word;
+        font-size: $font-size-medium;
+        @media (min-width: 480px) {
+          height: 145px;
+        }
+        @media (min-width: 768px) {
+          height: 235px;
+          font-size: $font-size-medium-fixed;
+        }
       }
     }
 
@@ -283,6 +290,9 @@ button {
         }
         &__confirmBox {
           @include confirmBox;
+          top: 0;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
       }
       &__error {
@@ -299,17 +309,22 @@ button {
       &__createPostBtn {
         display: flex;
         justify-content: center;
+        align-items: center;
         width: 100%;
         height: 100%;
+        padding-bottom: 5px;
         & button {
+          width: 25%;
+          max-width: 150px;
+          display: flex;
+          justify-content: center;
           padding: 0 5%;
         }
         & svg {
-          width: 40px;
-          height: 100%;
+          width: 60%;
         }
         & #sendSvg {
-          width: 50px;
+          width: 80%;
           stroke: black;
           stroke-width: 10;
         }

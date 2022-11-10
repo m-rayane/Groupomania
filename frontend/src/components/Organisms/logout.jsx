@@ -1,7 +1,6 @@
 import React from 'react'
 
 import ConfirmBox from '../Molecules/confirmBox'
-
 import { LogoutSvg } from '../Atoms/svg'
 
 export default function Logout({
@@ -18,12 +17,15 @@ export default function Logout({
         <LogoutSvg />
       </button>
       {isConfirm && (
-        <ConfirmBox
-          name={name}
-          className={className}
-          handleCancel={handleCancel}
-          handleCconfirm={handleConfirm}
-        />
+        <>
+          <div className={className + '__layout'}></div>
+          <ConfirmBox
+            name={name}
+            className={className}
+            handleCancel={handleCancel}
+            handleCconfirm={handleConfirm}
+          />
+        </>
       )}
     </div>
   )

@@ -1,27 +1,22 @@
 import '../utils/style/postOffice.scss'
 
-import { FormField, TextField } from '../components/Atoms/fields'
-import CommentForm from '../components/Molecules/commentForm'
-import Comment from '../components/Molecules/comment'
-
-import { LikeButton, CommentButton } from '../components/Atoms/buttons'
-import { PostButtons } from '../components/Molecules/postButtons'
-
-import { StampedSvg } from '../components/Atoms/svg'
-import { ModifyButtons } from '../components/Molecules/modifyButtons'
-
 import React, { useContext, useState } from 'react'
-
 import FormData from 'form-data'
 import Moment from 'react-moment'
-import ConfirmBox from '../components/Molecules/confirmBox'
 
+import { StampedSvg } from '../components/Atoms/svg'
+import { LikeButton, CommentButton } from '../components/Atoms/buttons'
+import { FormField, TextField } from '../components/Atoms/fields'
+import { PostButtons } from '../components/Molecules/postButtons'
+import CommentForm from '../components/Molecules/commentForm'
+import Comment from '../components/Molecules/comment'
+import { ModifyButtons } from '../components/Molecules/modifyButtons'
+import ConfirmBox from '../components/Molecules/confirmBox'
 import stamp from '../utils/images/stamp-rectangle-white.png'
 
 import { PostContext } from '../utils/contexts/postContext'
-
 import PostServices from '../api/Services/PostServices'
-import { useEffect } from 'react'
+
 const postServices = new PostServices()
 
 export default function PostOffice() {
@@ -40,12 +35,7 @@ export default function PostOffice() {
   const [isDeleteComment, setIsDeleteComment] = useState(false)
   const [targetPost, setTargetPost] = useState('')
   const [targetComment, setTargetComment] = useState('')
-  const [error, setError] = useState('')
-
-  // const [turnCard, setTurnCard] = useState('')
-
   const [postImage, setPostImage] = useState(null)
-
   const [isComDisplay, setIsComDisplay] = useState(false)
 
   return (
@@ -57,23 +47,28 @@ export default function PostOffice() {
           const poster = usersData.find(
             (userPoster) => userPoster._id === post.posterId
           )
+          // to determine if the user is the poster or an admin
           const isUserPost =
             poster &&
             (userIdData._id === poster._id || userIdData.isAdmin === 1)
 
+          // to prevent request delay
           if (poster === undefined) {
             setIsLoading(true)
           }
 
+          // to set the chosen image in state
           const handleImage = (e) => {
             setPostImage(e.target.files[0])
           }
 
+          // to determine if the user already liked the post
           const isUserLiked = post._usersLiked.includes(userIdData._id)
 
+          // when click and the like button
           const handleLike = async (e) => {
             e.preventDefault()
-            // if the user like an article
+            // if the user already like the post => send "unliking" data
             if (post._usersLiked.includes(userIdData._id)) {
               const unlikeData = {
                 like: 0,
@@ -81,6 +76,7 @@ export default function PostOffice() {
               }
               await postServices.postLike(post._id, unlikeData)
               getPosts()
+              // else the user like the post => send "liking" data
             } else {
               const likeData = {
                 like: 1,
@@ -101,6 +97,7 @@ export default function PostOffice() {
             setTargetPost(id)
           }
 
+          // to edit a post
           const editPost = async (e) => {
             e.preventDefault()
             const formData = new FormData()
@@ -114,7 +111,6 @@ export default function PostOffice() {
               formData.append('message', e.target['editedPostMessage'].value)
               formData.append('image', postImage)
             }
-            console.log(...formData)
             try {
               await postServices
                 .putPost(post._id, formData)
@@ -127,6 +123,7 @@ export default function PostOffice() {
             }
           }
 
+          // to delete a post
           const deletePost = async () => {
             try {
               await postServices.deletePost(post._id)
@@ -137,16 +134,17 @@ export default function PostOffice() {
             }
           }
 
+          // to display the comments
           const handleDisplayComment = (id) => {
             setIsComDisplay(!isComDisplay)
             setTargetPost(id)
           }
 
+          // tu submit a comment
           const submitComment = async (e) => {
             e.preventDefault()
             if (e.target['comment'].value.trim() === '') {
               e.target['comment'].value = ''
-              setError('The content of your comment is invalid !')
             } else {
               const commentData = {
                 commenterId: userIdData._id,
@@ -164,23 +162,14 @@ export default function PostOffice() {
             }
           }
 
+          // to cancel an editing comment
           const handleEditCommentCancel = (e) => {
             e.preventDefault()
             document.getElementById('comment').value = ''
           }
 
-          // const handleTurnCard = (id) => {
-          //   turnCard === id ? setTurnCard('') : setTurnCard(id)
-          // }
-
           return (
-            <li
-              // className={
-              //   turnCard === post._id ? 'postCard turnCard' : 'postCard'
-              // }
-              className="postCard"
-              key={post._id}
-            >
+            <li className="postCard" key={post._id}>
               {isLoading ? (
                 <div className="isLoading"></div>
               ) : (
@@ -190,9 +179,7 @@ export default function PostOffice() {
                       <>
                         <div className="postCard__front__header">
                           {post._image === 'null' ? (
-                            <div className="postCard__front__header__postImage">
-                              No Picture
-                            </div>
+                            <div className="postCard__front__header__postImage"></div>
                           ) : (
                             <div className="postCard__front__header__postImage">
                               <img
@@ -216,12 +203,12 @@ export default function PostOffice() {
                               <img
                                 src={stamp}
                                 className="postCard__front__header__user__picture__border"
-                                alt=""
+                                alt="border of the author protrait"
                               />
                               <img
                                 src={poster._profilePicture}
                                 className="postCard__front__header__user__picture__image"
-                                alt=""
+                                alt="portrait of the author of the post"
                               />
                             </div>
                             <div className="postCard__front__header__user__name">
@@ -396,6 +383,8 @@ export default function PostOffice() {
                                               setIsEditedComment(false)
                                             }
                                             handleSubmit={submitEditedComment}
+                                            altBorder="border of the author"
+                                            altPicture="portrait of the author of the comment"
                                           />
                                         </>
                                       )}
@@ -432,13 +421,10 @@ export default function PostOffice() {
                             lastName={userIdData.lastName}
                             handleSubmit={submitComment}
                             handleCancel={handleEditCommentCancel}
+                            altBorder="border of the author"
+                            altPicture="portrait of the author of the comment"
                           />
                         </div>
-                        {/* <TurnButton
-                          onClick={() => {
-                            handleTurnCard(post._id)
-                          }}
-                        /> */}
                       </>
                     )}
                     {isEdited && targetPost === post._id && (
@@ -459,18 +445,17 @@ export default function PostOffice() {
                                 Choose a new image
                               </FormField>
                             </div>
-                            <div className="postCard__front__header__data">
-                              <div className="postCard__front__header__data__stamp">
+                            <div className="postCard__front__header__data"></div>
+                            <div className="postCard__front__header__user">
+                              <div className="postCard__front__header__user__stamp">
                                 <StampedSvg />
                                 <Moment
                                   format="DD/MM/YY"
-                                  className="postCard__front__header__data__stamp__date"
+                                  className="postCard__front__header__user__stamp__date"
                                 >
                                   {post.createdAt}
                                 </Moment>
                               </div>
-                            </div>
-                            <div className="postCard__front__header__user">
                               <div className="postCard__front__header__user__name">
                                 {poster._firstName} {poster._lastName}
                               </div>
@@ -478,12 +463,12 @@ export default function PostOffice() {
                                 <img
                                   src={stamp}
                                   className="postCard__front__header__user__picture__border"
-                                  alt=""
+                                  alt="border of the author portrait"
                                 />
                                 <img
                                   src={poster._profilePicture}
                                   className="postCard__front__header__user__picture__image"
-                                  alt=""
+                                  alt="portrait of the author of the post"
                                 />
                               </div>
                             </div>
@@ -509,9 +494,6 @@ export default function PostOffice() {
                       </>
                     )}
                   </div>
-                  {/* <div className="postCard__back">
-                    <img src={post._image} alt="illustration of the post" />
-                  </div> */}
                 </>
               )}
             </li>

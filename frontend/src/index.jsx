@@ -28,6 +28,7 @@ function App() {
                 <Route path="/createPost" element={<CreatePost />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<PageNotFound />} />
+                <Route path="/error" element={<PageNotFound />} />
               </Routes>
             </main>
           </PostProvider>

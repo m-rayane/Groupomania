@@ -14,7 +14,7 @@ exports.getAllPosts = (req, res, next) => {
     })
 }
 
-// ot get one post to display on single post page
+// to get one post to display on single post page
 exports.getOnePost = (req, res, next) => {
   Post.findOne({
     _id: req.params.id,
@@ -29,6 +29,7 @@ exports.getOnePost = (req, res, next) => {
     })
 }
 
+// to create a post
 exports.createPost = (req, res) => {
   const postObject = req.body
   if (req.body.image === 'null') {
@@ -54,9 +55,6 @@ exports.createPost = (req, res) => {
 //  to edit a post
 exports.editPost = (req, res, next) => {
   if (req.body.isAdmin === 1 || req.body.editerId === req.auth.userId) {
-    console.log(req.body.isAdmin)
-    console.log(req.body.editerId)
-    console.log(req.auth.userId)
     const postObject = req.file
       ? {
           ...req.body,
@@ -82,9 +80,6 @@ exports.editPost = (req, res, next) => {
         res.status(400).json({ error })
       })
   } else {
-    console.log(req.body.isAdmin)
-    console.log(req.body.editerId)
-    console.log(req.auth.userId)
     res.status(401).json({ message: 'Not authorized' })
   }
 }
@@ -109,6 +104,7 @@ exports.deletePost = (req, res, next) => {
     })
 }
 
+// to creat a comment
 exports.createComment = async (req, res) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
@@ -119,11 +115,10 @@ exports.createComment = async (req, res) => {
     .catch((error) => res.status(500).json({ error }))
 }
 
+// to edit a comment
 exports.editComment = async (req, res) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      console.log(req.body)
-      console.log(req.params.id)
       Post.updateOne(
         { _id: req.params.id, 'comments._id': req.body.commentId },
         { $set: { 'comments.$.text': req.body.text } }
@@ -134,6 +129,7 @@ exports.editComment = async (req, res) => {
     .catch((error) => res.status(500).json({ error }))
 }
 
+//to delete a comment
 exports.deleteComment = async (req, res) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
@@ -151,7 +147,6 @@ exports.deleteComment = async (req, res) => {
 exports.likePost = (req, res, next) => {
   // if click on like button like = 1
   if (req.body.like === 1) {
-    console.log(req.body)
     Post.updateOne(
       { _id: req.params.id },
       { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } }
