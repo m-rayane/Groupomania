@@ -33,8 +33,8 @@ mongoose
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.apwibmo.mongodb.net/groupomania?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
-  .then(() => console.log('Connecttion to MongoDB successful !'))
-  .catch(() => console.log('Connecttion to MongoDB failed !'))
+  .then(() => console.log('Connection to MongoDB successful !'))
+  .catch(() => console.log('Connection to MongoDB failed !'))
 
 app.use(cors(corsOptions))
 app.use(bodyParser.urlencoded({ extended: true }))

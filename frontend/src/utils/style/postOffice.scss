@@ -11,6 +11,7 @@ button {
 }
 
 .isLoading {
+  z-index: 10;
   display: inline-block;
   position: absolute;
   top: 50%;

@@ -119,13 +119,6 @@ export default function Login() {
     }
   }
 
-  // const activeBtn = (elementId) => {
-  //   if (document.querySelector('.activeBtn')) {
-  //     document.querySelector('.activeBtn').classList.remove('activeBtn')
-  //   };
-  //   document.getElementById(elementId).classList.add('activeBtn');
-  // }
-
   const handleSignInModal = async () => {
     setActiveSignInBtn('activeBtn')
     setActiveSignUpBtn('')

@@ -10,6 +10,7 @@
 - Jump in backend folder with `cd backend`
 - Download backend required dependencies with `npm install`
 - Start the API with `nodemon` command
+- configure the .env file like the .env.example file
 
 **Front-end**
 
