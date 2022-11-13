@@ -13,7 +13,6 @@
   width: 300px;
   aspect-ratio: 1.5 / 1;
   &__title {
-    font-family: 'Dancing Script', cursive;
     font-size: 30px;
     text-align: center;
     padding: 0 20px;
@@ -58,5 +57,13 @@
     to {
       opacity: 1;
     }
+  }
+}
+
+@mixin comment-textField {
+  width: 90%;
+  padding: 0 25px 0 15px;
+  @media (min-width: 768px) {
+    padding: 0 0 0 20px;
   }
 }

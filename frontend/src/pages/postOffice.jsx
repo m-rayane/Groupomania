@@ -373,9 +373,6 @@ export default function PostOffice() {
                                           <CommentForm
                                             className="postCard__front__comment__content"
                                             comment={comment.text}
-                                            profilPicture={
-                                              commenterData._profilePicture
-                                            }
                                             firstName={commenterData._firstName}
                                             lastName={commenterData._lastName}
                                             defaultValue={comment.text}
@@ -383,7 +380,11 @@ export default function PostOffice() {
                                               setIsEditedComment(false)
                                             }
                                             handleSubmit={submitEditedComment}
+                                            borderImage={stamp}
                                             altBorder="border of the author"
+                                            profilPicture={
+                                              commenterData._profilePicture
+                                            }
                                             altPicture="portrait of the author of the comment"
                                           />
                                         </>

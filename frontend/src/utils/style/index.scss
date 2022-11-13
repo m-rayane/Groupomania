@@ -1,4 +1,5 @@
 @import './variables';
+@import './typography';
 
 * {
   box-sizing: border-box;
@@ -8,7 +9,7 @@
 
 body {
   background-color: $colour-tertiary;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Lato-Italic';
 }
 
 textarea {
