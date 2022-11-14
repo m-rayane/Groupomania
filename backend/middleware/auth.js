@@ -8,8 +8,10 @@ module.exports = (req, res, next) => {
     const token = req.cookies.jwt
     const decodedToken = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN)
     const userId = decodedToken.userId
+    const isAdmin = decodedToken.isAdmin
     req.auth = {
       userId: userId,
+      isAdmin: isAdmin,
     }
     next()
   } catch (error) {

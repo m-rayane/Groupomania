@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const User = require('../models/User')
 const fs = require('fs')
 
 // to get all posts to display on all post page
@@ -54,7 +55,7 @@ exports.createPost = (req, res) => {
 
 //  to edit a post
 exports.editPost = (req, res, next) => {
-  if (req.body.isAdmin === 1 || req.body.editerId === req.auth.userId) {
+  if (req.auth.isAdmin === 1 || req.body.editerId === req.auth.userId) {
     const postObject = req.file
       ? {
           ...req.body,
@@ -86,22 +87,26 @@ exports.editPost = (req, res, next) => {
 
 //to delete a post
 exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
-    .then((post) => {
-      const filename = post.image.split('/images/')[1]
-      fs.unlink(`images/${filename}`, () => {
-        Post.deleteOne({ _id: req.params.id })
-          .then(() => {
-            res.status(200).json({ message: 'Article is deleted !' })
-          })
-          .catch((error) =>
-            res.status(401).json({ message: 'Article is NOT deleted !' })
-          )
+  if (req.auth.isAdmin === 1 || req.body.editerId === req.auth.userId) {
+    Post.findOne({ _id: req.params.id })
+      .then((post) => {
+        const filename = post.image.split('/images/')[1]
+        fs.unlink(`images/${filename}`, () => {
+          Post.deleteOne({ _id: req.params.id })
+            .then(() => {
+              res.status(200).json({ message: 'Article is deleted !' })
+            })
+            .catch((error) =>
+              res.status(401).json({ message: 'Article is NOT deleted !' })
+            )
+        })
       })
-    })
-    .catch((error) => {
-      res.status(500).json({ error })
-    })
+      .catch((error) => {
+        res.status(500).json({ error })
+      })
+  } else {
+    res.status(401).json({ message: 'Not authorized' })
+  }
 }
 
 // to creat a comment

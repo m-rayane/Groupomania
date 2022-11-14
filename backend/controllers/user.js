@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
               .json({ message: "Password doesn't match with email." })
           }
           const createdToken = jwt.sign(
-            { userId: user._id },
+            { userId: user._id, isAdmin: user.isAdmin },
             process.env.ACCESS_SECRET_TOKEN,
             { expiresIn: tokenExpiresIn }
           )
