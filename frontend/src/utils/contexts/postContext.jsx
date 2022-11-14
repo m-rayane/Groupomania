@@ -35,7 +35,6 @@ export const PostProvider = ({ children }) => {
         await userServices
           .getUserId(userId)
           .then((response) => {
-            navigate('/', { replace: true })
             setUserIdData(response)
             setIsLoading(false)
           })

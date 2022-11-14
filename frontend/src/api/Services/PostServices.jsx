@@ -7,6 +7,7 @@ import {
 } from '../ApiCalls/apiRequests'
 
 export default class PostServices {
+  // ********** Post request **********
   // post request
   async postPost(data) {
     return await postRequest('/posts', data)
