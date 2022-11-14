@@ -32,9 +32,17 @@ export const PostProvider = ({ children }) => {
     if (userId) {
       const getUserId = async () => {
         setIsLoading(true)
-        const response = await userServices.getUserId(userId)
-        setUserIdData(response)
-        setIsLoading(false)
+        await userServices
+          .getUserId(userId)
+          .then((response) => {
+            navigate('/', { replace: true })
+            setUserIdData(response)
+            setIsLoading(false)
+          })
+          .catch((error) => {
+            console.log(error)
+            navigate('/error', { replace: true })
+          })
       }
       getUserId()
     } else {

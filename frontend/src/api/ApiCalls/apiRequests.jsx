@@ -7,11 +7,7 @@ axios.defaults.withCredentials = true
 
 // axios request
 export const getRequest = async (url) => {
-  const result = await axios.get(url).catch((error) => {
-    if (error.response) {
-      return console.log(error)
-    }
-  })
+  const result = await axios.get(url)
   if (result.status === 200) {
     return result
   } else {

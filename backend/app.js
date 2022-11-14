@@ -25,14 +25,15 @@ const userRoutes = require('./routes/user')
 
 const app = express()
 
-// 'mongodb://localhost:27017/groupomania?authMechanism=DEFAULT'   LOCAL MONGODB COMPASS
+// mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.apwibmo.mongodb.net/groupomania?retryWrites=true&w=majority
+// mongodb://localhost:27017/groupomania?authMechanism=DEFAULT   LOCAL MONGODB COMPASS
 
 // connect to mongodb
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.apwibmo.mongodb.net/groupomania?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(`mongodb://localhost:27017/groupomania?authMechanism=DEFAULT `, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('Connection to MongoDB successful !'))
   .catch(() => console.log('Connection to MongoDB failed !'))
 

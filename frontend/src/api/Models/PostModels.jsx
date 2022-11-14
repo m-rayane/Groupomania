@@ -10,7 +10,6 @@ export default class Post {
     this._createdAt = data.createdAt
     this._updatedAt = data.updatedAt
   }
-
   get id() {
     return this._id
   }
